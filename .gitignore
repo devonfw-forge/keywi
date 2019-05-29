@@ -1,3 +1,5 @@
+/.keywi.mv.db
+
 # MVN
 /keywi/**/target
 
