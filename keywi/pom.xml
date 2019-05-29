@@ -16,12 +16,14 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <devonfw.test.excluded.groups>com.devonfw.module.test.common.api.category.CategorySystemTest</devonfw.test.excluded.groups>
+    <maven.test.skip>false</maven.test.skip>
   </properties>
 
   <modules>
     <module>api</module>
     <module>core</module>
-            <module>server</module>
+    <module>server</module>
+    <module>client</module>
   </modules>
 
   <dependencyManagement>

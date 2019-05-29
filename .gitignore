@@ -16,6 +16,8 @@ hs_err_pid*
 
 # Angular
 /keywi/client/node_modules
+/keywi/client/dist
+/keywi/client/node
 
 # IntelliJ
 *.iml

@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <artifactId>keywi-client</artifactId>
+    <packaging>jar</packaging>
+    <name>${project.artifactId}</name>
+    <description>Client application for Keywi project.</description>
+
+    <parent>
+        <groupId>com.devonfw.keywi</groupId>
+        <artifactId>keywi</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
+    <properties>
+        <!--For filtering in index.html to set build meta data -->
+        <timestamp>${maven.build.timestamp}</timestamp>
+        <maven.build.timestamp.format>yyyy-MM-dd HH:mm:ss z</maven.build.timestamp.format>
+
+        <web.client.dir>.</web.client.dir>
+        <web.client.dist.dir>dist/web-client</web.client.dist.dir>
+        <node.version>v10.16.0</node.version>
+        <npm.version>6.9.0</npm.version>
+        <frontend-maven-plugin.version>1.6</frontend-maven-plugin.version>
+        <npm.runTests>true</npm.runTests>
+        <npm.build.env>prod</npm.build.env>
+    </properties>
+
+    <profiles>
+        <profile>
+            <id>web-client</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>com.github.eirslett</groupId>
+                        <artifactId>frontend-maven-plugin</artifactId>
+                        <version>${frontend-maven-plugin.version}</version>
+                        <configuration>
+                            <workingDirectory>${web.client.dir}</workingDirectory>
+                            <environmentVariables>
+                                <NO_PROXY>${npm.noproxy.settings}</NO_PROXY>
+                            </environmentVariables>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>install node and npm</id>
+                                <goals>
+                                    <goal>install-node-and-npm</goal>
+                                </goals>
+                                <configuration>
+                                    <nodeVersion>${node.version}</nodeVersion>
+                                    <npmVersion>${npm.version}</npmVersion>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>npm install</id>
+                                <goals>
+                                    <goal>npm</goal>
+                                </goals>
+                                <configuration>
+                                    <arguments>install --registry=${npm.registry.url}</arguments>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>TSLint (npm run-script lint)</id>
+                                <phase>generate-resources</phase>
+                                <goals>
+                                    <goal>npm</goal>
+                                </goals>
+                                <configuration>
+                                    <skip>${maven.test.skip}</skip>
+                                    <arguments>run-script lint</arguments>
+                                </configuration>
+                            </execution>
+
+                            <execution>
+                                <id>Build Client (npm run-script build:${npm.build.env})</id>
+                                <phase>generate-resources</phase>
+                                <goals>
+                                    <goal>npm</goal>
+                                </goals>
+                                <configuration>
+                                    <arguments>run-script build:${npm.build.env}</arguments>
+                                </configuration>
+                            </execution>
+
+                            <execution>
+                                <id>JavaScript Tests (npm run-script test:ci)</id>
+                                <phase>test</phase>
+                                <goals>
+                                    <goal>npm</goal>
+                                </goals>
+                                <configuration>
+                                    <skip>${maven.test.skip}</skip>
+                                    <arguments>run-script test:ci</arguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <executions>
+                            <!-- Filtering the src/main/web-client/dist/web-client/index.html to set the current version and build timestamp
+                              as meta
+                              tags in the HTML document head. Technically, a copy of index.html has to be created: first the file is filtered
+                              and copied to target/client and then copied to src/main/web/dist/web-client overwriting the previous
+                              version.
+                            -->
+                            <execution>
+                                <id>filter-index.html</id>
+                                <phase>generate-resources</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <useDefaultDelimiters>true</useDefaultDelimiters>
+                                    <outputDirectory>${project.build.directory}/client</outputDirectory>
+                                    <resources>
+                                        <resource>
+                                            <directory>${basedir}/${web.client.dir}/${web.client.dist.dir}</directory>
+                                            <filtering>true</filtering>
+                                            <includes>
+                                                <include>index.html</include>
+                                            </includes>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>copy-index.html</id>
+                                <phase>generate-resources</phase>
+                                <goals>
+                                    <goal>copy-resources</goal>
+                                </goals>
+                                <configuration>
+                                    <outputDirectory>${basedir}/${web.client.dir}/${web.client.dist.dir}
+                                    </outputDirectory>
+                                    <overwrite>true</overwrite>
+                                    <resources>
+                                        <resource>
+                                            <directory>${project.build.directory}/client</directory>
+                                            <filtering>false</filtering>
+                                            <includes>
+                                                <include>index.html</include>
+                                            </includes>
+                                        </resource>
+                                    </resources>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+                <!-- In addition to the default src/main/resources we set the web client content (from src/main/web/dist/web-client)
+                  as a another resource having the web content in the /static directory which Spring Boot exposes as web content
+                  by default.
+                -->
+                <resources>
+                    <resource>
+                        <directory>${project.basedir}/src/main/resources</directory>
+                    </resource>
+                    <resource>
+                        <directory>${web.client.dir}/${web.client.dist.dir}</directory>
+                        <targetPath>static</targetPath>
+                    </resource>
+                </resources>
+            </build>
+        </profile>
+    </profiles>
+</project>
