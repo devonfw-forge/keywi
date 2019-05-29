@@ -41,9 +41,6 @@
                         <version>${frontend-maven-plugin.version}</version>
                         <configuration>
                             <workingDirectory>${web.client.dir}</workingDirectory>
-                            <environmentVariables>
-                                <NO_PROXY>${npm.noproxy.settings}</NO_PROXY>
-                            </environmentVariables>
                         </configuration>
                         <executions>
                             <execution>
@@ -62,7 +59,7 @@
                                     <goal>npm</goal>
                                 </goals>
                                 <configuration>
-                                    <arguments>install --registry=${npm.registry.url}</arguments>
+                                    <arguments>install</arguments>
                                 </configuration>
                             </execution>
                             <execution>
