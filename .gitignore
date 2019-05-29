@@ -1,4 +1,7 @@
-.*
+# MVN
+/keywi/**/target
+
+# Java
 *.class
 *.log
 *.ctxt
@@ -11,11 +14,12 @@
 *.rar
 hs_err_pid*
 
-target
-eclipse-target
-node_modules
+# Angular
+/keywi/client/node_modules
 
-
-
+# IntelliJ
 *.iml
+.idea
 
+# Eclipse
+eclipse-target
