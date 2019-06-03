@@ -36,4 +36,12 @@
       <scope>provided</scope>
     </dependency>
   </dependencies>
+
+  <properties>
+    <servicedoc.info.title>Service documentation of keywi</servicedoc.info.title>
+    <servicedoc.info.description>Keywi is a master-data-management system based on devonfw</servicedoc.info.description>
+    <servicedoc.host>localhost</servicedoc.host>
+    <servicedoc.port>80</servicedoc.port>
+    <servicedoc.basePath>/</servicedoc.basePath>
+  </properties>
 </project>
