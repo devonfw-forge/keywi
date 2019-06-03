@@ -11,5 +11,7 @@ image:https://raw.githubusercontent.com/devonfw-forge/keywi/master/logo/keywi.pn
 Keywi (speak https://en.wikipedia.org/wiki/Kiwi[Kiwi]) is a master-data-management system that allows you to manage and maintain lists of master-data (key-lists).
 This can be things like "countries of the world", "academic titles", etc.
 Other applications may use `keywi` as a microservice to integrate such data and let the user choose values from such a key-list using a combobox.
+This allows administrators to add new items to a key-list or modify existing items on the fly.
+The apps using `keywi` will then (potentially after a small delay) reflect this changes without the need to update the software or restart any app.
 The `keywi` server (backend) is written in Java based on https://github.com/devonfw/devon4j/[devon4j] and the client (frontend) is written in TypeScript based on https://github.com/devonfw/devon4ng/[devon4ng] (using Angular).
 
