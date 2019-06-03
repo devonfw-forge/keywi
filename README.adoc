@@ -3,7 +3,11 @@ image:https://img.shields.io/github/license/devonfw-forge/keywi.svg?label=Licens
 image:https://travis-ci.org/devonfw-forge/keywi.svg?branch=develop["Build Status",link="https://travis-ci.org/devonfw-forge/keywi"]
 
 == About
+[.float-group]
+--
+[.left]
 image:https://raw.githubusercontent.com/devonfw-forge/keywi/master/logo/keywi.png["Keywi Logo"]
+--
 Keywi (speak https://en.wikipedia.org/wiki/Kiwi[Kiwi]) is a master-data-management system that allows you to manage and maintain lists of master-data (key-lists).
 This can be things like "countries of the world", "academic titles", etc.
 Other applications may use `keywi` as a microservice to integrate such data and let the user choose values from such a key-list using a combobox.
