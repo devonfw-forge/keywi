@@ -1,9 +1,10 @@
-/.keywi.mv.db
+target
+eclipse-target
+node_modules
+dist
+node
 
-# MVN
-/keywi/**/target
-
-# Java
+.*
 *.class
 *.log
 *.ctxt
@@ -14,16 +15,5 @@
 *.zip
 *.tar.gz
 *.rar
-hs_err_pid*
-
-# Angular
-/keywi/client/node_modules
-/keywi/client/dist
-/keywi/client/node
-
-# IntelliJ
 *.iml
-.idea
-
-# Eclipse
-eclipse-target
+hs_err_pid*
