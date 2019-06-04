@@ -15,7 +15,7 @@ public interface KeyListRepository extends DefaultRepository<KeyListEntity> {
    * @param key the {@link KeyListEntity#getKey() key} of the requested {@link KeyListEntity}.
    * @return the {@link KeyListEntity} with the given {@code key} or {@code null} if not found.
    */
-  @Query("SELECT list FROM KeyList list" //
+  @Query("SELECT list FROM KeyListEntity list" //
       + " WHERE list.key = key")
   KeyListEntity findByKey(@Param("key") String key);
 
