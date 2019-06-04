@@ -10,6 +10,7 @@ import javax.ws.rs.PathParam;
 
 import org.springframework.data.domain.Page;
 
+import com.devonfw.keywi.keymanagement.common.api.KeyItem;
 import com.devonfw.keywi.keymanagement.common.api.KeyList;
 import com.devonfw.keywi.keymanagement.logic.api.to.KeyItemEto;
 import com.devonfw.keywi.keymanagement.logic.api.to.KeyItemSearchCriteriaTo;
@@ -28,12 +29,20 @@ public interface KeymanagementRestService extends RestService {
   List<KeyListEto> findKeyListEtos();
 
   /**
-   * @param id the ID of the {@link KeyListEto}
-   * @return the {@link KeyListEto}
+   * @param id the {@link KeyListEto#getId() ID} of the {@link KeyListEto}.
+   * @return the requested {@link KeyListEto}.
    */
   @GET
   @Path("/keylist/{id}/")
   KeyListEto findKeyList(@PathParam("id") long id);
+
+  /**
+   * @param key the {@link KeyListEto#getKey() business key} of the {@link KeyListEto}.
+   * @return the requested {@link KeyListEto}.
+   */
+  @GET
+  @Path("/keylist/{key}/")
+  KeyListEto findKeyListByKey(@PathParam("key") String key);
 
   /**
    * @param keylist the {@link KeyListEto} to be saved
@@ -55,13 +64,24 @@ public interface KeymanagementRestService extends RestService {
    * Calling this method may be very expensive. Only use it for {@link KeyList#isCacheable() cachable} {@link KeyList}s.
    * Whenever possible prefer using {@link #findKeyItemEtos(KeyItemSearchCriteriaTo)} instead.
    *
-   * @param id the ID of the {@link KeyListEto key-list} {@link KeyItemEto#getKeyListId() owning} the requested
-   *        {@link KeyItemEto items}.
-   * @return the {@link List} with ALL {@link KeyItemEto}s of the {@link KeyListEto key-list} for the given ID.
+   * @param id the ID of the {@link KeyListEto key-list} {@link KeyItemEto#getKeyListId() owning} {@link KeyList}.
+   * @return the {@link List} with ALL {@link KeyItemEto}s owned by the specified {@link KeyList}.
    */
   @GET
   @Path("/keyitem-for-list/{id}/")
   List<KeyItemEto> findKeyItemEtosForList(@PathParam("id") long id);
+
+  /**
+   * <b>ATTENTION:</b><br>
+   * Calling this method may be very expensive. Only use it for {@link KeyList#isCacheable() cachable} {@link KeyList}s.
+   * Whenever possible prefer using {@link #findKeyItemEtos(KeyItemSearchCriteriaTo)} instead.
+   *
+   * @param key the {@link KeyList#getKey() key} of the {@link KeyItem#getKeyListId() owning} {@link KeyList}.
+   * @return the {@link List} of ALL {@link KeyItemEto}s owned by the specified {@link KeyList}.
+   */
+  @GET
+  @Path("/keyitem-for-list-by-key/{key}/")
+  List<KeyItemEto> findKeyItemEtosForListByKey(@PathParam("key") String key);
 
   /**
    * @param criteria the {@link KeyItemSearchCriteriaTo} specifying the search query.
