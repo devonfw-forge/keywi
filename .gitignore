@@ -19,4 +19,3 @@ node
 hs_err_pid*
 
 !.mvn
-!.mvn/wrapper/*.jar
