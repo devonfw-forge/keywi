@@ -17,3 +17,6 @@ node
 *.rar
 *.iml
 hs_err_pid*
+
+!.mvn
+!.mvn/wrapper/*.jar
