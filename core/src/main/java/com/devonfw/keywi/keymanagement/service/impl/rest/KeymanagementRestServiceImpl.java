@@ -42,6 +42,12 @@ public class KeymanagementRestServiceImpl implements KeymanagementRestService {
   }
 
   @Override
+  public List<KeyItemEto> findKeyItemEtosForListByKey(String key) {
+
+    return this.keymanagement.findKeyItemEtosForListByKey(key);
+  }
+
+  @Override
   public Page<KeyItemEto> findKeyItemEtos(KeyItemSearchCriteriaTo criteria) {
 
     return this.keymanagement.findKeyItemEtos(criteria);
@@ -63,6 +69,12 @@ public class KeymanagementRestServiceImpl implements KeymanagementRestService {
   public KeyListEto findKeyList(long id) {
 
     return this.keymanagement.findKeyList(IdRef.of(id));
+  }
+
+  @Override
+  public KeyListEto findKeyListByKey(String key) {
+
+    return this.keymanagement.findKeyListByKey(key);
   }
 
   @Override

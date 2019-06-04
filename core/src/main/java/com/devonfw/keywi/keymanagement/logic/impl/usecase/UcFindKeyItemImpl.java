@@ -59,6 +59,14 @@ public class UcFindKeyItemImpl extends AbstractKeyItemUc implements UcFindKeyIte
 
   @Override
   @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_KEY_ITEM)
+  public List<KeyItemEto> findKeyItemEtosForListByKey(String key) {
+
+    List<KeyItemEntity> items = getKeyItemRepository().findAllForListByKey(key);
+    return getBeanMapper().mapList(items, KeyItemEto.class);
+  }
+
+  @Override
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_KEY_ITEM)
   public Page<KeyItemEto> findKeyItemEtos(KeyItemSearchCriteriaTo criteria) {
 
     Page<KeyItemEntity> items = getKeyItemRepository().find(criteria);

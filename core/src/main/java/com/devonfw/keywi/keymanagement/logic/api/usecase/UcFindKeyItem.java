@@ -30,9 +30,19 @@ public interface UcFindKeyItem {
    * Whenever possible prefer using {@link #findKeyItemEtos(KeyItemSearchCriteriaTo)} instead.
    *
    * @param id the {@link IdRef} of the {@link KeyItem#getKeyListId() owning} {@link KeyList}.
-   * @return the {@link List} of ALL {@link KeyItemEto}s.
+   * @return the {@link List} of ALL {@link KeyItemEto}s owned by the specified {@link KeyList}.
    */
   List<KeyItemEto> findKeyItemEtosForList(IdRef<KeyList> id);
+
+  /**
+   * <b>ATTENTION:</b><br>
+   * Calling this method may be very expensive. Only use it for {@link KeyList#isCacheable() cachable} {@link KeyList}s.
+   * Whenever possible prefer using {@link #findKeyItemEtos(KeyItemSearchCriteriaTo)} instead.
+   *
+   * @param key the {@link KeyList#getKey() key} of the {@link KeyItem#getKeyListId() owning} {@link KeyList}.
+   * @return the {@link List} of ALL {@link KeyItemEto}s owned by the specified {@link KeyList}.
+   */
+  List<KeyItemEto> findKeyItemEtosForListByKey(String key);
 
   /**
    * @param criteria the {@link KeyItemSearchCriteriaTo} specifying the search query.

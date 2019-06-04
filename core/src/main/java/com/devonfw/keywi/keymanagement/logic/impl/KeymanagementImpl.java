@@ -45,6 +45,12 @@ public class KeymanagementImpl extends AbstractComponentFacade implements Keyman
   }
 
   @Override
+  public List<KeyItemEto> findKeyItemEtosForListByKey(String key) {
+
+    return this.ucFindKeyItem.findKeyItemEtosForListByKey(key);
+  }
+
+  @Override
   public Page<KeyItemEto> findKeyItemEtos(KeyItemSearchCriteriaTo criteria) {
 
     return this.ucFindKeyItem.findKeyItemEtos(criteria);
@@ -72,6 +78,12 @@ public class KeymanagementImpl extends AbstractComponentFacade implements Keyman
   public KeyListEto findKeyList(IdRef<KeyList> id) {
 
     return this.ucFindKeyList.findKeyList(id);
+  }
+
+  @Override
+  public KeyListEto findKeyListByKey(String key) {
+
+    return this.ucFindKeyList.findKeyListByKey(key);
   }
 
   @Override
