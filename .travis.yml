@@ -4,8 +4,6 @@ jdk:
   - oraclejdk8
 before_install:
  - chmod +x mvnw
-script: 
- - mvn install
 cache:
   directories:
     - "$HOME/.m2/repository"
