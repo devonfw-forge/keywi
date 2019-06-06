@@ -6,7 +6,7 @@ describe('AppComponent', () => {
       providers: [
         AppComponent
       ],
-    })
+    });
   }));
   it('should create the app', async(() => {
     const app = TestBed.get(AppComponent);

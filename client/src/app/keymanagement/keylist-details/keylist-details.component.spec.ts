@@ -8,7 +8,7 @@ describe('KeylistDetailsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       providers: [ KeylistDetailsComponent ]
-    })
+    });
   }));
 
   beforeEach(() => {

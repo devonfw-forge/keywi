@@ -5,12 +5,12 @@ import {KeylistOverviewComponent} from './keylist-overview.component';
 
 describe('KeylistOverviewComponent', () => {
   let component: KeylistOverviewComponent;
-  let keyManagementRestService: KeymanagementRestService;
+  const keyManagementRestService: KeymanagementRestService = undefined;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       providers: [ KeylistOverviewComponent,
         {provide: KeymanagementRestService, useValue: keyManagementRestService}]
-    })
+    });
   }));
 
   beforeEach(() => {

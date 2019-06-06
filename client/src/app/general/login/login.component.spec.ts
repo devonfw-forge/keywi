@@ -8,9 +8,9 @@ import {LoginComponent} from './login.component';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
-  let loginServiceMock: LoginBasicService;
-  let router: Router;
-  let authenticationService: AuthenticationService;
+  const loginServiceMock: LoginBasicService;
+  const router: Router = undefined;
+  const authenticationService: AuthenticationService = undefined;
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       providers: [LoginComponent, [
