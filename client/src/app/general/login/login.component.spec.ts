@@ -8,7 +8,7 @@ import {LoginComponent} from './login.component';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
-  const loginServiceMock: LoginBasicService;
+  const loginServiceMock: LoginBasicService = undefined;
   const router: Router = undefined;
   const authenticationService: AuthenticationService = undefined;
   beforeEach(async(() => {
