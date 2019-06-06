@@ -83,7 +83,7 @@ public class BaseUserDetailsService implements UserDetailsService {
 
     Collection<String> roles = new ArrayList<>();
     // TODO for a reasonable application you need to retrieve the roles of the user from a central IAM system
-    roles.add(username);
+    roles.add("keywi.FindKeyList");
     return roles;
   }
 

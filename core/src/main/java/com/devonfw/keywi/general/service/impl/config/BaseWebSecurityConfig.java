@@ -66,14 +66,16 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
   @Override
   public void configure(HttpSecurity http) throws Exception {
 
-    String[] unsecuredResources = new String[] { "/login", "/security/**", "/services/rest/login",
-    "/services/rest/logout" };
+    String[] unsecuredResources = new String[]{"/login", "/**","/h2-console/**", "/security/**", "/services/rest/login",
+        "/services/rest/logout"};
 
     http
         //
         .userDetailsService(this.userDetailsService)
         // define all urls that are not to be secured
-        .authorizeRequests().antMatchers(unsecuredResources).permitAll().anyRequest().authenticated().and()
+        .authorizeRequests()
+        .antMatchers(unsecuredResources).permitAll()
+        .anyRequest().authenticated().and()
 
         // activate crsf check for a selection of urls (but not for login & logout)
         .csrf().requireCsrfProtectionMatcher(new CsrfRequestMatcher()).and()
@@ -137,10 +139,9 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
   @Inject
   public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 
-    auth.inMemoryAuthentication().withUser("waiter").password(this.passwordEncoder.encode("waiter")).roles("Waiter")
-        .and().withUser("cook").password(this.passwordEncoder.encode("cook")).roles("Cook").and().withUser("barkeeper")
-        .password(this.passwordEncoder.encode("barkeeper")).roles("Barkeeper").and().withUser("chief")
-        .password(this.passwordEncoder.encode("chief")).roles("Chief");
+    auth.inMemoryAuthentication().withUser("admin")
+        .password(this.passwordEncoder.encode("admin"))
+        .roles("FindKeyList");
   }
 
 }

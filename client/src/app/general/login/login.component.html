@@ -1,0 +1,23 @@
+<form layout="column" class="pad" (ngSubmit)="login(loginForm.form)" #loginForm="ngForm">
+    <input
+           type="text"
+           name="username"
+           ngModel
+           required
+           id="username-input-field">
+
+    <input
+           type="password"
+           ngModel
+           name="password"
+           required
+           id="password-input-field">
+
+  <button
+          class="im-button"
+          color="primary"
+          type="submit"
+          id="login-button">
+   Login
+  </button>
+</form>

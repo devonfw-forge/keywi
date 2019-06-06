@@ -26,6 +26,8 @@ public interface KeymanagementRestService extends RestService {
   /**
    * @return the {@link List} of all {@link KeyListEto}.
    */
+  @GET
+  @Path("/keylists")
   List<KeyListEto> findKeyListEtos();
 
   /**

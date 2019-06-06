@@ -1,0 +1,10 @@
+keylist-overview works!
+<nav>
+  <a id="KeyListDetails" routerLink="/keylist-details/1" routerLinkActive="active">Keylist</a>
+  <ul *ngFor="let keylist of keyLists">
+    <li>
+      <span>{{keylist.id}}</span>
+    </li>
+  </ul>
+  <router-outlet></router-outlet>
+</nav>
