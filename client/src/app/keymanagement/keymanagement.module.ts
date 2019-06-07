@@ -7,7 +7,7 @@ import {KeylistOverviewComponent} from './keylist-overview/keylist-overview.comp
 import {KeymanagementRestService} from './keymanagement.rest.service';
 import {KeylistDetailsElementListComponent} from './keylist-details/keylist-details-element-list/keylist-details-element-list.component';
 import {KeylistDetailsElementDetailsComponent} from './keylist-details/keylist-details-element-details/keylist-details-element-details.component';
-import {FlexLayoutModule} from '@angular/flex-layout';
+import {KeywiMaterialModule} from '../general/keywi-material.module';
 
 @NgModule({
   declarations: [
@@ -18,8 +18,8 @@ import {FlexLayoutModule} from '@angular/flex-layout';
   imports: [
     CommonModule,
     RouterModule,
-    AgGridModule.withComponents([KeylistOverviewComponent]),
-    FlexLayoutModule
+    AgGridModule.withComponents([KeylistOverviewComponent, KeylistDetailsElementListComponent]),
+    KeywiMaterialModule
   ],
   providers: [
     KeymanagementRestService

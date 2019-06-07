@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
-import {MatButtonModule, MatInputModule, MatRadioModule} from '@angular/material';
-import {MatFormFieldModule} from '@angular/material/typings/esm5/form-field';
+import {MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatRadioModule} from '@angular/material';
 import {FlexLayoutModule} from '@angular/flex-layout';
 
 @NgModule({
@@ -9,6 +8,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
     MatFormFieldModule,
     MatInputModule,
     MatRadioModule,
+    MatCardModule,
     FlexLayoutModule
   ],
   exports: [
@@ -16,6 +16,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
     MatFormFieldModule,
     MatInputModule,
     MatRadioModule,
+    MatCardModule,
     FlexLayoutModule
   ]
 })
