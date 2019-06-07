@@ -1,3 +1,12 @@
-<p>
-  keylist-details works!
-</p>
+<h1>Key list: entries management</h1>
+<h2>Entries of key list</h2>
+<p>To edit an entry, you have to select it from the list first.</p>
+<div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="left">
+    <button>New</button>
+    <button>Deactivate</button>
+    <button>Delete</button>
+</div>
+<div fxLayout="row" fxLayout.lt-md="column" fxLayoutGap="10">
+    <app-keylist-details-element-list fxFlex ></app-keylist-details-element-list>
+    <app-keylist-details-element-details fxFlex></app-keylist-details-element-details>
+</div>
