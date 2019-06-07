@@ -7,6 +7,10 @@ import {Observable, of} from 'rxjs';
 import {KeyListEto} from '../common/to/KeyListEto';
 import {KeylistDetailsElementDetailsComponent} from './keylist-details-element-details/keylist-details-element-details.component';
 import {KeylistDetailsElementListComponent} from './keylist-details-element-list/keylist-details-element-list.component';
+import {KeywiMaterialModule} from '../../general/keywi-material.module';
+import {AgGridModule} from 'ag-grid-angular';
+import {KeylistOverviewComponent} from '../keylist-overview/keylist-overview.component';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 class KeymanagementRestServiceMock {
   findAllKeylists(): Observable<KeyListEto[]> {
@@ -41,7 +45,12 @@ describe('KeylistDetailsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [KeylistDetailsComponent, KeylistDetailsElementDetailsComponent, KeylistDetailsElementListComponent],
-      imports: [RouterTestingModule.withRoutes([])],
+      imports: [
+        RouterTestingModule.withRoutes([]),
+        KeywiMaterialModule,
+        NoopAnimationsModule,
+        AgGridModule.withComponents([KeylistDetailsElementListComponent])
+      ],
       providers: [{provide: KeymanagementRestService, useClass: KeymanagementRestServiceMock}]
     });
   }));

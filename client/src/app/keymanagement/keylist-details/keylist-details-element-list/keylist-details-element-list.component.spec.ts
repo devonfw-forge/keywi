@@ -1,6 +1,8 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { KeylistDetailsElementListComponent } from './keylist-details-element-list.component';
+import {KeylistDetailsElementListComponent} from './keylist-details-element-list.component';
+import {AgGridModule} from 'ag-grid-angular';
+import {KeywiMaterialModule} from '../../../general/keywi-material.module';
 
 describe('KeylistDetailsElementListComponent', () => {
   let component: KeylistDetailsElementListComponent;
@@ -8,9 +10,13 @@ describe('KeylistDetailsElementListComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ KeylistDetailsElementListComponent ]
+      declarations: [KeylistDetailsElementListComponent],
+      imports: [
+        AgGridModule.withComponents([KeylistDetailsElementListComponent]),
+        KeywiMaterialModule
+      ]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {

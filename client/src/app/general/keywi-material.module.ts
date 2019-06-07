@@ -9,7 +9,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
     MatInputModule,
     MatRadioModule,
     MatCardModule,
-    FlexLayoutModule
+    FlexLayoutModule,
   ],
   exports: [
     MatButtonModule,

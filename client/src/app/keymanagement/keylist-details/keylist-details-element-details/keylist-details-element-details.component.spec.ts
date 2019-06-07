@@ -1,6 +1,8 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { KeylistDetailsElementDetailsComponent } from './keylist-details-element-details.component';
+import {KeylistDetailsElementDetailsComponent} from './keylist-details-element-details.component';
+import {KeywiMaterialModule} from '../../../general/keywi-material.module';
+import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 
 describe('KeylistDetailsElementDetailsComponent', () => {
   let component: KeylistDetailsElementDetailsComponent;
@@ -8,9 +10,10 @@ describe('KeylistDetailsElementDetailsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ KeylistDetailsElementDetailsComponent ]
+      declarations: [KeylistDetailsElementDetailsComponent],
+      imports: [KeywiMaterialModule, NoopAnimationsModule]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
