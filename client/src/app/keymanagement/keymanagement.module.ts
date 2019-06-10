@@ -8,6 +8,8 @@ import {KeymanagementRestService} from './keymanagement.rest.service';
 import {KeylistDetailsElementListComponent} from './keylist-details/keylist-details-element-list/keylist-details-element-list.component';
 import {KeylistDetailsElementDetailsComponent} from './keylist-details/keylist-details-element-details/keylist-details-element-details.component';
 import {KeywiMaterialModule} from '../general/keywi-material.module';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,10 @@ import {KeywiMaterialModule} from '../general/keywi-material.module';
     CommonModule,
     RouterModule,
     AgGridModule.withComponents([KeylistOverviewComponent, KeylistDetailsElementListComponent]),
-    KeywiMaterialModule
+    KeywiMaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
+    TranslateModule
   ],
   providers: [
     KeymanagementRestService

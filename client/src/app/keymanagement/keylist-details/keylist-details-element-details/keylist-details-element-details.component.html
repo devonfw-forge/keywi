@@ -1,21 +1,28 @@
-<mat-card>
-    <mat-card-title>Edit entry</mat-card-title>
+<form [formGroup]="formGroup">
+  <mat-card *ngIf="value">
+    <mat-card-title>{{ ('keyListDetails.details.title.' + (isNew ? 'new' : 'edit')) | translate }}</mat-card-title>
     <mat-card-content fxLayout="column" fxLayoutGap="10px">
-        <mat-form-field>
-            <mat-label>Business key</mat-label>
-            <input matInput type="text">
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Name</mat-label>
-            <input matInput type="text">
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Value</mat-label>
-            <input matInput type="text">
-        </mat-form-field>
+      <mat-form-field>
+        <mat-label>{{ 'keyListDetails.details.businessKey' | translate }}</mat-label>
+        <input matInput type="text" formControlName="key">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>{{ 'keyListDetails.details.name' | translate }}</mat-label>
+        <input matInput type="text" formControlName="name">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>{{ 'keyListDetails.details.value' | translate }}</mat-label>
+        <input matInput type="text" formControlName="value">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>{{ 'keyListDetails.details.comment' | translate }}</mat-label>
+        <textarea matInput rows="5" formControlName="comment"></textarea>
+      </mat-form-field>
+      <mat-checkbox formControlName="disabled">{{ 'keyListDetails.details.disabled' | translate }}</mat-checkbox>
     </mat-card-content>
     <mat-card-actions fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="end">
-        <button mat-raised-button>Cancel</button>
-        <button mat-raised-button>Save</button>
+      <button mat-raised-button (click)="onCancel($event)">{{ 'general.dialog.cancel' | translate }}</button>
+      <button mat-raised-button (click)="onSave($event)">{{ 'general.dialog.save' | translate }}</button>
     </mat-card-actions>
-</mat-card>
+  </mat-card>
+</form>

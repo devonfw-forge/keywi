@@ -29,6 +29,7 @@ export class KeylistDetailsComponent implements OnInit, OnDestroy {
       .subscribe((data: { keyList: KeyListCto }) => {
         this.keyList = data.keyList.keyList;
         this.keyListItems = data.keyList.keyItems;
+        console.log(this.keyList);
       });
   }
 
@@ -39,5 +40,31 @@ export class KeylistDetailsComponent implements OnInit, OnDestroy {
 
   onRowSelected(item?: KeyItemEto) {
     this.selected = item;
+  }
+
+  onDetailsCancel() {
+
+  }
+
+  onDetailsSaved(keyItem: KeyItemEto) {
+    console.log(keyItem);
+  }
+
+  onNew() {
+    this.selected = {
+      name: '',
+      key: '',
+      value: '',
+      comment: '',
+      disabled: false
+    };
+  }
+
+  onDeactivate() {
+
+  }
+
+  onDelete() {
+
   }
 }

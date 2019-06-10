@@ -30,7 +30,9 @@ import com.devonfw.module.basic.common.api.reference.IdRef;
 @Transactional
 public class UcFindKeyItemImpl extends AbstractKeyItemUc implements UcFindKeyItem {
 
-  /** Logger instance. */
+  /**
+   * Logger instance.
+   */
   private static final Logger LOG = LoggerFactory.getLogger(UcFindKeyItemImpl.class);
 
   @Override
@@ -54,13 +56,17 @@ public class UcFindKeyItemImpl extends AbstractKeyItemUc implements UcFindKeyIte
   public List<KeyItemEto> findKeyItemEtosForList(IdRef<KeyList> id) {
 
     List<KeyItemEntity> items = getKeyItemRepository().findAllForList(id.getId());
-    KeyItemEntity item1 = new KeyItemEntity();
-    item1.setKey("key1");
-    item1.setValue("value1");
-    item1.setComment("comment");
-    item1.setDisabled(false);
-    item1.setName("name1");
-    items.add(item1);
+
+    for (int i = 1; i <= 10; ++i) {
+      KeyItemEntity item = new KeyItemEntity();
+      item.setId((long) i);
+      item.setKey("key" + i);
+      item.setValue("value " + i);
+      item.setComment("comment " + i);
+      item.setDisabled(false);
+      item.setName("name" + i);
+      items.add(item);
+    }
     return getBeanMapper().mapList(items, KeyItemEto.class);
   }
 

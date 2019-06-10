@@ -1,20 +1,37 @@
 export default {
-  components: {
-    datepicker: {
-      weekday: {
-        0: 'Sun',
-        1: 'Mon',
-        2: 'Tue',
-        3: 'Wed',
-        4: 'Thu',
-        5: 'Fri',
-        6: 'Sat'
-      }
+  general: {
+    dialog: {
+      new: 'New',
+      save: 'Save',
+      delete: 'Delete',
+      deactivate: 'Deactivate',
+      cancel: 'Cancel'
     }
   },
-  geographic: {
-    countrySearch: {
-      title: 'Search'
+  breadcrumb: {
+    keyLists: 'key lists'
+  },
+  keyListDetails: {
+    title: 'entries management',
+    subtitle: 'Entries of the key list',
+    description: 'To edit an entry, you have to select it from the list first.',
+    list: {
+      headers: {
+        name: 'Name',
+        key: 'Key',
+        value: 'Value'
+      }
+    },
+    details: {
+      title: {
+        new: 'New entry',
+        edit: 'Edit entry'
+      },
+      businessKey: 'Business key',
+      name: 'Name',
+      value: 'Value',
+      comment: 'Comment',
+      disabled: 'Disabled'
     }
   }
 };
