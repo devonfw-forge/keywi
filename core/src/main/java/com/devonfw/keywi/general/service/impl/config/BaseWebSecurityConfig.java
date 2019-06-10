@@ -141,7 +141,7 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
 
     auth.inMemoryAuthentication().withUser("admin")
         .password(this.passwordEncoder.encode("admin"))
-        .roles("FindKeyList");
+        .roles("FindKeyList", "FindKeyItem");
   }
 
 }

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
+import {KeyItemEto} from '../../common/to/KeyItemEto';
 
 @Component({
   selector: 'app-keylist-details-element-details',
@@ -7,7 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class KeylistDetailsElementDetailsComponent implements OnInit {
 
-  constructor() { }
+  @Input()
+  value: KeyItemEto;
+
+  constructor() {
+  }
 
   ngOnInit() {
   }

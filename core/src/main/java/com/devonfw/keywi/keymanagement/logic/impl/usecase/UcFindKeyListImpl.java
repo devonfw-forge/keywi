@@ -35,11 +35,24 @@ public class UcFindKeyListImpl extends AbstractKeyListUc implements UcFindKeyLis
   @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_KEY_LIST)
   public KeyListEto findKeyList(IdRef<KeyList> id) {
 
+
     LOG.debug("Get KeyList with id {} from database.", id);
     if (id == null) {
       return null;
     }
     Optional<KeyListEntity> foundEntity = getKeyListRepository().findById(id.getId());
+    // mocked --.
+    KeyListEntity keyListEntity1 = new KeyListEntity();
+    keyListEntity1.setName("Country");
+    keyListEntity1.setId(id.getId());
+    keyListEntity1.setKey("Country");
+    keyListEntity1.setComment("Dummy country list");
+    keyListEntity1.setModificationCounter(1);
+    keyListEntity1.setCacheable(true);
+    keyListEntity1.setOrdering(KeyItemProperty.KEY);
+    keyListEntity1.setValueRequired(true);
+    // <- mocked
+    foundEntity = Optional.of(keyListEntity1);
     if (foundEntity.isPresent()) {
       return getBeanMapper().map(foundEntity.get(), KeyListEto.class);
     } else {

@@ -1,7 +1,7 @@
 /**
  * Base class for all transfer objects.
  */
-export class AbstractEto {
+export interface AbstractEto {
   id: number;
   modificationCounter: number;
   revision: number;
