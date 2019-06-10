@@ -1,6 +1,7 @@
 import {NgModule} from '@angular/core';
 import {MatButtonModule, MatCardModule, MatFormFieldModule, MatInputModule, MatRadioModule} from '@angular/material';
 import {FlexLayoutModule} from '@angular/flex-layout';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   imports: [
@@ -10,6 +11,7 @@ import {FlexLayoutModule} from '@angular/flex-layout';
     MatRadioModule,
     MatCardModule,
     FlexLayoutModule,
+    BrowserAnimationsModule
   ],
   exports: [
     MatButtonModule,
@@ -17,7 +19,8 @@ import {FlexLayoutModule} from '@angular/flex-layout';
     MatInputModule,
     MatRadioModule,
     MatCardModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    BrowserAnimationsModule
   ]
 })
 export class KeywiMaterialModule {

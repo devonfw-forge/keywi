@@ -1,10 +1,10 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute, convertToParamMap} from '@angular/router';
-import {KeymanagementRestService} from '../keymanagement.rest.service';
+import {ActivatedRoute} from '@angular/router';
 import {KeyListEto} from '../common/to/KeyListEto';
 import {Subject} from 'rxjs';
-import {map, switchMap, takeUntil} from 'rxjs/operators';
+import {takeUntil} from 'rxjs/operators';
 import {KeyItemEto} from '../common/to/KeyItemEto';
+import {KeyListCto} from '../common/to/KeyListCto';
 
 @Component({
   selector: 'app-keylist-details',
@@ -20,22 +20,16 @@ export class KeylistDetailsComponent implements OnInit, OnDestroy {
   private _unsub = new Subject();
 
   constructor(
-    private route: ActivatedRoute,
-    private keyManagementRestService: KeymanagementRestService) {
+    private route: ActivatedRoute) {
   }
 
   ngOnInit() {
     this.route.data
       .pipe(takeUntil(this._unsub))
-      .subscribe((data: { keyList: KeyListEto }) => {
-        this.keyList = data.keyList;
+      .subscribe((data: { keyList: KeyListCto }) => {
+        this.keyList = data.keyList.keyList;
+        this.keyListItems = data.keyList.keyItems;
       });
-    this.route.paramMap
-      .pipe(
-        takeUntil(this._unsub),
-        map(paramMap => paramMap.get('id')),
-        switchMap(id => this.keyManagementRestService.findKeyItemsForKeyList(+id)))
-      .subscribe(keyItems => this.keyListItems = keyItems);
   }
 
   ngOnDestroy(): void {

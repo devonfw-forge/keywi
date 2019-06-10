@@ -42,6 +42,7 @@ class KeymanagementRestServiceMock {
     });
   }
 }
+
 class ParamMapMock implements ParamMap {
   readonly keys = ['id'];
 
@@ -79,7 +80,7 @@ describe('KeylistDetailsComponent', () => {
         {provide: KeymanagementRestService, useClass: KeymanagementRestServiceMock},
         {
           provide: ActivatedRoute, useValue: {
-            data: of({name: 'foo'}),
+            data: of({keyList: {name: 'foo'}}),
             paramMap: of(new ParamMapMock())
           }
         }
