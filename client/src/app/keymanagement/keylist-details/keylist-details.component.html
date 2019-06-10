@@ -1,7 +1,7 @@
 <div>
-    <a routerLink="/keylist-overview">Key lists</a> / <span>{{ keyList.name }}</span>
+    <a routerLink="/keylist-overview">Key lists</a> / <span>{{ keyList?.name }}</span>
 </div>
-<h1>{{ keyList.name }}: entries management</h1>
+<h1>{{ keyList?.name }}: entries management</h1>
 <h2>Entries of key list</h2>
 <p>To edit an entry, you have to select it from the list first.</p>
 <div fxLayout="column" fxLayoutGap="10px">

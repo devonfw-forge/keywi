@@ -11,6 +11,7 @@ import {KeywiMaterialModule} from '../../general/keywi-material.module';
 import {AgGridModule} from 'ag-grid-angular';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
 import {KeyItemEto} from '../common/to/KeyItemEto';
+import {ActivatedRoute, ParamMap} from '@angular/router';
 
 class KeymanagementRestServiceMock {
   findAllKeylists(): Observable<KeyListEto[]> {
@@ -41,21 +42,48 @@ class KeymanagementRestServiceMock {
     });
   }
 }
+class ParamMapMock implements ParamMap {
+  readonly keys = ['id'];
 
-xdescribe('KeylistDetailsComponent', () => {
+  get(name: string): string | null {
+    return '1';
+  }
+
+  getAll(name: string): string[] {
+    return ['1'];
+  }
+
+  has(name: string): boolean {
+    return true;
+  }
+}
+
+describe('KeylistDetailsComponent', () => {
   let component: KeylistDetailsComponent;
   let fixture: ComponentFixture<KeylistDetailsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [KeylistDetailsComponent, KeylistDetailsElementDetailsComponent, KeylistDetailsElementListComponent],
+      declarations: [
+        KeylistDetailsComponent,
+        KeylistDetailsElementDetailsComponent,
+        KeylistDetailsElementListComponent
+      ],
       imports: [
         RouterTestingModule.withRoutes([]),
         KeywiMaterialModule,
         NoopAnimationsModule,
         AgGridModule.withComponents([KeylistDetailsElementListComponent])
       ],
-      providers: [{provide: KeymanagementRestService, useClass: KeymanagementRestServiceMock}]
+      providers: [
+        {provide: KeymanagementRestService, useClass: KeymanagementRestServiceMock},
+        {
+          provide: ActivatedRoute, useValue: {
+            data: of({name: 'foo'}),
+            paramMap: of(new ParamMapMock())
+          }
+        }
+      ]
     });
   }));
 
