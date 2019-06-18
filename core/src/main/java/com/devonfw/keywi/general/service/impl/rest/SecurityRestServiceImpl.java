@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.security.web.csrf.CsrfTokenRepository;
 
@@ -60,9 +59,8 @@ public class SecurityRestServiceImpl implements SecurityRestService {
     if (authentication == null) {
       throw new NoActiveUserException();
     }
-    UserDetails user = (UserDetails) authentication.getPrincipal();
     UserProfileTo profile = new UserProfileTo();
-    profile.setLogin(user.getUsername());
+    profile.setLogin(authentication.getPrincipal().toString());
     return profile;
   }
 
