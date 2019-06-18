@@ -36,6 +36,14 @@ public interface KeymanagementRestService extends RestService {
   KeyListEto findKeyList(@PathParam("id") long id);
 
   /**
+   * @param key the {@link KeyListEto#getKey() business key} of the {@link KeyListEto}.
+   * @return the requested {@link KeyListEto}.
+   */
+  @GET
+  @Path("/keylist-by-key/{key}/")
+  KeyListEto findKeyListByKey(@PathParam("key") String key);
+
+  /**
    * @param keylist the {@link KeyListEto} to be saved
    * @return the recently created {@link KeyListEto}
    */

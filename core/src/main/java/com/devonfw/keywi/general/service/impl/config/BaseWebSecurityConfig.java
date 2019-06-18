@@ -4,11 +4,10 @@ import javax.inject.Inject;
 import javax.servlet.Filter;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationFailureHandler;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutFilter;
@@ -34,13 +33,10 @@ import com.devonfw.module.security.common.impl.rest.LogoutSuccessHandlerReturnin
 public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Value("${security.cors.enabled}")
-  boolean corsEnabled = false;
+  private boolean corsEnabled = false;
 
   @Inject
-  private UserDetailsService userDetailsService;
-
-  @Inject
-  private PasswordEncoder passwordEncoder;
+  private AuthenticationProvider authenticationProvider;
 
   private CorsFilter getCorsFilter() {
 
@@ -66,12 +62,10 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
   @Override
   public void configure(HttpSecurity http) throws Exception {
 
-    String[] unsecuredResources = new String[] { "/login", "/security/**", "/services/rest/login",
-    "/services/rest/logout" };
+    String[] unsecuredResources =
+        new String[] { "/login", "/security/**", "/services/rest/login", "/services/rest/logout" };
 
     http
-        //
-        .userDetailsService(this.userDetailsService)
         // define all urls that are not to be secured
         .authorizeRequests().antMatchers(unsecuredResources).permitAll().anyRequest().authenticated().and()
 
@@ -102,8 +96,8 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
    */
   protected Filter getSimpleRestLogoutFilter() {
 
-    LogoutFilter logoutFilter = new LogoutFilter(new LogoutSuccessHandlerReturningOkHttpStatusCode(),
-        new SecurityContextLogoutHandler());
+    LogoutFilter logoutFilter =
+        new LogoutFilter(new LogoutSuccessHandlerReturningOkHttpStatusCode(), new SecurityContextLogoutHandler());
 
     // configure logout for rest logouts
     logoutFilter.setLogoutRequestMatcher(new AntPathRequestMatcher("/services/rest/logout"));
@@ -120,8 +114,8 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
    */
   protected JsonUsernamePasswordAuthenticationFilter getSimpleRestAuthenticationFilter() throws Exception {
 
-    JsonUsernamePasswordAuthenticationFilter jsonFilter = new JsonUsernamePasswordAuthenticationFilter(
-        new AntPathRequestMatcher("/services/rest/login"));
+    JsonUsernamePasswordAuthenticationFilter jsonFilter =
+        new JsonUsernamePasswordAuthenticationFilter(new AntPathRequestMatcher("/services/rest/login"));
     jsonFilter.setPasswordParameter("j_password");
     jsonFilter.setUsernameParameter("j_username");
     jsonFilter.setAuthenticationManager(authenticationManager());
@@ -133,14 +127,9 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
     return jsonFilter;
   }
 
-  @SuppressWarnings("javadoc")
-  @Inject
-  public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+  @Override
+  public void configure(AuthenticationManagerBuilder builder) throws Exception {
 
-    auth.inMemoryAuthentication().withUser("waiter").password(this.passwordEncoder.encode("waiter")).roles("Waiter")
-        .and().withUser("cook").password(this.passwordEncoder.encode("cook")).roles("Cook").and().withUser("barkeeper")
-        .password(this.passwordEncoder.encode("barkeeper")).roles("Barkeeper").and().withUser("chief")
-        .password(this.passwordEncoder.encode("chief")).roles("Chief");
+    builder.authenticationProvider(this.authenticationProvider);
   }
-
 }

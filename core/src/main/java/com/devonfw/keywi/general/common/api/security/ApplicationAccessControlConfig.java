@@ -13,7 +13,7 @@ public class ApplicationAccessControlConfig extends AccessControlConfig {
 
   public static final String APP_ID = "keywi";
 
-  private static final String PREFIX = APP_ID + ".";
+  public static final String PREFIX = APP_ID + ".";
 
   /** @see com.devonfw.keywi.keymanagement.logic.api.usecase.UcFindKeyItem */
   public static final String PERMISSION_FIND_KEY_ITEM = PREFIX + "FindKeyItem";
