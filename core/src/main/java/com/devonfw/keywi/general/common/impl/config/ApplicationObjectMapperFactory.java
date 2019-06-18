@@ -16,7 +16,6 @@ import com.devonfw.module.criteria.common.api.query.json.StringSearchCriteriaJso
 import com.devonfw.module.json.common.base.ObjectMapperFactory;
 import com.devonfw.module.json.common.base.type.PageableJsonDeserializer;
 import com.devonfw.module.json.common.base.type.PageableJsonSerializer;
-import com.fasterxml.jackson.databind.module.SimpleAbstractTypeResolver;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 
 /**
@@ -38,9 +37,7 @@ public class ApplicationObjectMapperFactory extends ObjectMapperFactory {
     module.addSerializer(Pageable.class, new PageableJsonSerializer());
     module.addDeserializer(Pageable.class, new PageableJsonDeserializer());
     // register spring-data Page
-    SimpleAbstractTypeResolver resolver = new SimpleAbstractTypeResolver();
-    resolver.addMapping(Page.class, JsonPage.class);
-    module.setAbstractTypes(resolver);
+    module.addAbstractTypeMapping(Page.class, JsonPage.class);
     module.setMixInAnnotation(Page.class, JsonPage.class);
     // register IdRef mapping
     module.addSerializer(IdRef.class, new IdRefJsonSerializer());
