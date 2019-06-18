@@ -1,0 +1,22 @@
+<button (click)="createNew()">
+  Create new
+</button>
+<button (click)="goToDetails()">
+  List Details
+</button>
+<button (click)="goToItems()">
+  Key List entries
+</button>
+<button (click)="delete()">
+  Delete
+</button>
+<nav>
+  <ag-grid-angular
+    style="width: 1024px; height: 1024px;"
+    class="ag-theme-balham"
+    [rowData]="keyLists"
+    [columnDefs]="columnDefs">
+
+  </ag-grid-angular>
+  <router-outlet></router-outlet>
+</nav>

@@ -20,6 +20,12 @@ public interface UcFindKeyList {
   KeyListEto findKeyList(IdRef<KeyList> id);
 
   /**
+   * @param key the {@link KeyList#getKey() business key} of the requested {@link KeyList}.
+   * @return the {@link KeyListEto} with the given {@code key} of {@code null} if not found.
+   */
+  KeyListEto findKeyListByKey(String key);
+
+  /**
    * @return the {@link List} of all {@link KeyListEto}s.
    */
   List<KeyListEto> findKeyListEtos();

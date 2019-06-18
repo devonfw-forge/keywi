@@ -62,12 +62,14 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
   @Override
   public void configure(HttpSecurity http) throws Exception {
 
-    String[] unsecuredResources =
-        new String[] { "/login", "/security/**", "/services/rest/login", "/services/rest/logout" };
+    String[] unsecuredResources = new String[]{"/login", "/**","/h2-console/**", "/security/**", "/services/rest/login",
+        "/services/rest/logout"};
 
     http
         // define all urls that are not to be secured
-        .authorizeRequests().antMatchers(unsecuredResources).permitAll().anyRequest().authenticated().and()
+        .authorizeRequests()
+        .antMatchers(unsecuredResources).permitAll()
+        .anyRequest().authenticated().and()
 
         // activate crsf check for a selection of urls (but not for login & logout)
         .csrf().requireCsrfProtectionMatcher(new CsrfRequestMatcher()).and()

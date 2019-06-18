@@ -34,7 +34,9 @@ import com.devonfw.module.basic.common.api.reference.IdRef;
 @Transactional
 public class UcFindKeyItemImpl extends AbstractKeyItemUc implements UcFindKeyItem {
 
-  /** Logger instance. */
+  /**
+   * Logger instance.
+   */
   private static final Logger LOG = LoggerFactory.getLogger(UcFindKeyItemImpl.class);
 
   @Inject
@@ -57,10 +59,29 @@ public class UcFindKeyItemImpl extends AbstractKeyItemUc implements UcFindKeyIte
   }
 
   @Override
-  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_KEY_ITEM)
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_KEY_LIST)
   public List<KeyItemEto> findKeyItemEtosForList(IdRef<KeyList> id) {
 
     List<KeyItemEntity> items = getKeyItemRepository().findAllForList(id.getId());
+
+    for (int i = 1; i <= 10; ++i) {
+      KeyItemEntity item = new KeyItemEntity();
+      item.setId((long) i);
+      item.setKey("key" + i);
+      item.setValue("value " + i);
+      item.setComment("comment " + i);
+      item.setDisabled(false);
+      item.setName("name" + i);
+      items.add(item);
+    }
+    return getBeanMapper().mapList(items, KeyItemEto.class);
+  }
+
+  @Override
+  @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_KEY_LIST)
+  public List<KeyItemEto> findKeyItemEtosForListByKey(String key) {
+
+    List<KeyItemEntity> items = getKeyItemRepository().findAllForListByKey(key);
     return getBeanMapper().mapList(items, KeyItemEto.class);
   }
 

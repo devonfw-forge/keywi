@@ -1,7 +1,7 @@
 = keywi
 
 image:https://img.shields.io/github/license/devonfw-forge/keywi.svg?label=License["Apache License, Version 2.0",link=https://github.com/devonfw-forge/keywi/blob/develop/LICENSE]
-image:https://travis-ci.org/devonfw-forge/keywi.svg?branch=develop["Build Status",link="https://travis-ci.org/devonfw-forge/keywi"]
+image:https://travis-ci.org/devonfw-forge/keywi.svg?branch=master["Build Status",link="https://travis-ci.org/devonfw-forge/keywi"]
 
 == About
 [.float-group]
