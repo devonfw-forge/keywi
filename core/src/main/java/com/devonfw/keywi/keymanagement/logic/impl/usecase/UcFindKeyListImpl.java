@@ -41,18 +41,6 @@ public class UcFindKeyListImpl extends AbstractKeyListUc implements UcFindKeyLis
       return null;
     }
     Optional<KeyListEntity> foundEntity = getKeyListRepository().findById(id.getId());
-    // mocked --.
-    KeyListEntity keyListEntity1 = new KeyListEntity();
-    keyListEntity1.setName("Country");
-    keyListEntity1.setId(id.getId());
-    keyListEntity1.setKey("Country");
-    keyListEntity1.setComment("Dummy country list");
-    keyListEntity1.setModificationCounter(1);
-    keyListEntity1.setCacheable(true);
-    keyListEntity1.setOrdering(KeyItemProperty.KEY);
-    keyListEntity1.setValueRequired(true);
-    // <- mocked
-    foundEntity = Optional.of(keyListEntity1);
     if (foundEntity.isPresent()) {
       return getBeanMapper().map(foundEntity.get(), KeyListEto.class);
     } else {
@@ -81,28 +69,6 @@ public class UcFindKeyListImpl extends AbstractKeyListUc implements UcFindKeyLis
   public List<KeyListEto> findKeyListEtos() {
 
     List<KeyListEntity> keyListEntities = getKeyListRepository().findAll();
-    KeyListEntity keyListEntity1 = new KeyListEntity();
-    keyListEntity1.setName("Country");
-    keyListEntity1.setId(1L);
-    keyListEntity1.setKey("Country");
-    keyListEntity1.setComment("Dummy country list");
-    keyListEntity1.setModificationCounter(1);
-    keyListEntity1.setCacheable(true);
-    keyListEntity1.setOrdering(KeyItemProperty.KEY);
-    keyListEntity1.setValueRequired(true);
-
-    KeyListEntity keyListEntity2 = new KeyListEntity();
-    keyListEntity2.setName("Currency");
-    keyListEntity2.setId(2L);
-    keyListEntity2.setKey("Currency");
-    keyListEntity2.setComment("Dummy currency list");
-    keyListEntity2.setModificationCounter(1);
-    keyListEntity2.setCacheable(true);
-    keyListEntity2.setOrdering(KeyItemProperty.KEY);
-    keyListEntity2.setValueRequired(true);
-
-    keyListEntities.add(keyListEntity1);
-    keyListEntities.add(keyListEntity2);
     return getBeanMapper().mapList(keyListEntities, KeyListEto.class);
   }
 
