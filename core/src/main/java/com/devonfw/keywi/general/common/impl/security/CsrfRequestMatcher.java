@@ -17,7 +17,7 @@ public class CsrfRequestMatcher implements RequestMatcher {
   private static final Pattern HTTP_METHOD_PATTERN = Pattern.compile("^GET$");
 
   private static final String[] PATH_PREFIXES_WITHOUT_CSRF_PROTECTION =
-      { "/login", "/logout", "/services/rest/login", "/websocket" };
+      { "/login", "/logout", "/services/rest/login", "/websocket", "/h2-console" };
 
   @Override
   public boolean matches(HttpServletRequest request) {

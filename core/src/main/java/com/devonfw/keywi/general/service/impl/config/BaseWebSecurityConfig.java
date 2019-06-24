@@ -73,6 +73,7 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
 
         // activate crsf check for a selection of urls (but not for login & logout)
         .csrf().requireCsrfProtectionMatcher(new CsrfRequestMatcher()).and()
+        .headers().frameOptions().disable().and()
 
         // configure parameters for simple form login (and logout)
         .formLogin().successHandler(new SimpleUrlAuthenticationSuccessHandler()).defaultSuccessUrl("/")
@@ -85,9 +86,9 @@ public abstract class BaseWebSecurityConfig extends WebSecurityConfigurerAdapter
         .addFilterAfter(getSimpleRestAuthenticationFilter(), BasicAuthenticationFilter.class)
         .addFilterAfter(getSimpleRestLogoutFilter(), LogoutFilter.class);
 
-    if (this.corsEnabled) {
-      http.addFilterBefore(getCorsFilter(), CsrfFilter.class);
-    }
+//    if (this.corsEnabled) {
+//      http.addFilterBefore(getCorsFilter(), CsrfFilter.class);
+//    }
   }
 
   /**
