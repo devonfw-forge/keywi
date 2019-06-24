@@ -8,6 +8,9 @@ package com.devonfw.module.criteria.common.api.query;
  */
 public interface LiteralSearchCriteria<T> extends SearchCriteria<T> {
 
+  /** Name of the property {@link #getLiteral() literal}. */
+  String PROPERTY_LITERAL = "literal";
+
   /**
    * @return the literal value to {@link #getOperator() compare with}.
    */

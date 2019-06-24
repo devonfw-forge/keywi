@@ -76,7 +76,7 @@ public class SearchOperator<T> {
    * @param id the {@link #toString() string representation}.
    * @return the {@link SearchOperator} for the given {@code id} or {@code null} if not defined.
    */
-  static SearchOperator<?> get(String id) {
+  public static SearchOperator<?> get(String id) {
 
     return SYNTAX2OPERATOR_MAP.get(id);
   }

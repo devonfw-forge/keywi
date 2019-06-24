@@ -43,7 +43,7 @@ public interface KeymanagementRestService extends RestService {
    * @return the requested {@link KeyListEto}.
    */
   @GET
-  @Path("/keylist-for-key/{key}/")
+  @Path("/keylist-by-key/{key}/")
   KeyListEto findKeyListByKey(@PathParam("key") String key);
 
   /**

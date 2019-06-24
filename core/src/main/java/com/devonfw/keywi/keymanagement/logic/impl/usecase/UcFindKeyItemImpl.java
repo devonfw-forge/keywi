@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import javax.annotation.security.RolesAllowed;
+import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.slf4j.Logger;
@@ -16,6 +17,9 @@ import com.devonfw.keywi.general.common.api.security.ApplicationAccessControlCon
 import com.devonfw.keywi.keymanagement.common.api.KeyItem;
 import com.devonfw.keywi.keymanagement.common.api.KeyList;
 import com.devonfw.keywi.keymanagement.dataaccess.api.KeyItemEntity;
+import com.devonfw.keywi.keymanagement.dataaccess.api.KeyListEntity;
+import com.devonfw.keywi.keymanagement.dataaccess.api.datatype.KeyItemProperty;
+import com.devonfw.keywi.keymanagement.dataaccess.api.repo.KeyListRepository;
 import com.devonfw.keywi.keymanagement.logic.api.to.KeyItemEto;
 import com.devonfw.keywi.keymanagement.logic.api.to.KeyItemSearchCriteriaTo;
 import com.devonfw.keywi.keymanagement.logic.api.usecase.UcFindKeyItem;
@@ -34,6 +38,9 @@ public class UcFindKeyItemImpl extends AbstractKeyItemUc implements UcFindKeyIte
    * Logger instance.
    */
   private static final Logger LOG = LoggerFactory.getLogger(UcFindKeyItemImpl.class);
+
+  @Inject
+  private KeyListRepository keyListRepository;
 
   @Override
   @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_KEY_ITEM)
@@ -82,6 +89,17 @@ public class UcFindKeyItemImpl extends AbstractKeyItemUc implements UcFindKeyIte
   @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_KEY_ITEM)
   public Page<KeyItemEto> findKeyItemEtos(KeyItemSearchCriteriaTo criteria) {
 
+    KeyItemProperty ordering = criteria.getOrdering();
+    if (ordering == null) {
+      IdRef<KeyList> keyListId = criteria.getKeyListId();
+      if (keyListId != null) {
+        KeyListEntity keyList = this.keyListRepository.find(keyListId.getId());
+        if (keyList != null) {
+          ordering = keyList.getOrdering();
+          criteria.setOrdering(ordering);
+        }
+      }
+    }
     Page<KeyItemEntity> items = getKeyItemRepository().find(criteria);
     return mapPaginatedEntityList(items, KeyItemEto.class);
   }

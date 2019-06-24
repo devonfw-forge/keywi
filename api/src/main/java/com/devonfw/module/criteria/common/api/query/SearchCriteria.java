@@ -8,6 +8,9 @@ package com.devonfw.module.criteria.common.api.query;
  */
 public interface SearchCriteria<T> {
 
+  /** Name of the property {@link #getOperator() operator}. */
+  String PROPERTY_OPERATOR = "operator";
+
   /**
    * @return the {@link SearchOperator}. May not be {@code null}.
    */

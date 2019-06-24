@@ -1,5 +1,6 @@
 package com.devonfw.keywi.general.common.api.to;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import com.devonfw.module.basic.common.api.to.AbstractTo;
@@ -18,6 +19,9 @@ public abstract class AbstractSearchCriteriaTo extends AbstractTo {
    */
   public Pageable getPageable() {
 
+    if (this.pageable == null) {
+      this.pageable = PageRequest.of(0, 50);
+    }
     return this.pageable;
   }
 
