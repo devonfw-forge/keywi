@@ -6,7 +6,6 @@ import java.util.Optional;
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Named;
 
-import com.devonfw.keywi.keymanagement.dataaccess.api.datatype.KeyItemProperty;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,6 +14,7 @@ import org.springframework.validation.annotation.Validated;
 import com.devonfw.keywi.general.common.api.security.ApplicationAccessControlConfig;
 import com.devonfw.keywi.keymanagement.common.api.KeyList;
 import com.devonfw.keywi.keymanagement.dataaccess.api.KeyListEntity;
+import com.devonfw.keywi.keymanagement.dataaccess.api.datatype.KeyItemProperty;
 import com.devonfw.keywi.keymanagement.logic.api.to.KeyListEto;
 import com.devonfw.keywi.keymanagement.logic.api.usecase.UcFindKeyList;
 import com.devonfw.keywi.keymanagement.logic.base.usecase.AbstractKeyListUc;
@@ -34,7 +34,6 @@ public class UcFindKeyListImpl extends AbstractKeyListUc implements UcFindKeyLis
   @Override
   @RolesAllowed(ApplicationAccessControlConfig.PERMISSION_FIND_KEY_LIST)
   public KeyListEto findKeyList(IdRef<KeyList> id) {
-
 
     LOG.debug("Get KeyList with id {} from database.", id);
     if (id == null) {
