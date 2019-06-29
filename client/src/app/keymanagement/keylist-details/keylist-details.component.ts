@@ -5,6 +5,7 @@ import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import {KeyItemEto} from '../common/to/KeyItemEto';
 import {KeyListCto} from '../common/to/KeyListCto';
+import {KeymanagementRestService} from '../keymanagement.rest.service';
 
 @Component({
   selector: 'app-keylist-details',
@@ -20,7 +21,8 @@ export class KeylistDetailsComponent implements OnInit, OnDestroy {
   private _unsub = new Subject();
 
   constructor(
-    private route: ActivatedRoute) {
+    private readonly service: KeymanagementRestService,
+    private readonly route: ActivatedRoute) {
   }
 
   ngOnInit() {
@@ -48,6 +50,11 @@ export class KeylistDetailsComponent implements OnInit, OnDestroy {
 
   onDetailsSaved(keyItem: KeyItemEto) {
     console.log(keyItem);
+    this.service.saveKeyItem(keyItem)
+      .pipe(takeUntil(this._unsub))
+      .subscribe(
+        saved => this.patchItems(saved),
+        error1 => console.log(error1));
   }
 
   onNew() {
@@ -65,6 +72,22 @@ export class KeylistDetailsComponent implements OnInit, OnDestroy {
   }
 
   onDelete() {
+    const id = this.selected.id;
+    this.service.deleteKeyItem(this.selected.id)
+      .pipe(takeUntil(this._unsub))
+      .subscribe(
+        value => {
+          this.removeItem(id);
+          this.selected = null;
+        },
+        error1 => console.log(error1));
+  }
 
+  private patchItems(item: KeyItemEto) {
+    this.keyListItems = this.keyListItems.map(value => value.id === item.id ? item : value);
+  }
+
+  private removeItem(id: number) {
+    this.keyListItems = this.keyListItems.filter(value => value.id !== id);
   }
 }
