@@ -45,20 +45,24 @@ export class KeylistDetailsComponent implements OnInit, OnDestroy {
   }
 
   onDetailsCancel() {
-
+    this.selected = null;
   }
 
   onDetailsSaved(keyItem: KeyItemEto) {
-    console.log(keyItem);
+    const isNew = !keyItem.id;
     this.service.saveKeyItem(keyItem)
       .pipe(takeUntil(this._unsub))
       .subscribe(
-        saved => this.patchItems(saved),
+        saved => {
+          this.keyListItems = isNew ? this.addItem(saved) : this.patchItems(saved);
+          this.selected = null;
+        },
         error1 => console.log(error1));
   }
 
   onNew() {
     this.selected = {
+      keyListId: this.keyList.id,
       name: '',
       key: '',
       value: '',
@@ -77,17 +81,24 @@ export class KeylistDetailsComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsub))
       .subscribe(
         value => {
-          this.removeItem(id);
+          this.keyListItems = this.removeItem(id);
           this.selected = null;
         },
         error1 => console.log(error1));
   }
 
-  private patchItems(item: KeyItemEto) {
-    this.keyListItems = this.keyListItems.map(value => value.id === item.id ? item : value);
+  private addItem(item: KeyItemEto): KeyItemEto[] {
+    // TODO client side sorting not performed
+    const res = this.patchItems(item);
+    res.push(item);
+    return res;
   }
 
-  private removeItem(id: number) {
-    this.keyListItems = this.keyListItems.filter(value => value.id !== id);
+  private patchItems(item: KeyItemEto): KeyItemEto[] {
+    return this.keyListItems.map(value => value.id === item.id ? item : value);
+  }
+
+  private removeItem(id: number): KeyItemEto[] {
+    return this.keyListItems.filter(value => value.id !== id);
   }
 }
