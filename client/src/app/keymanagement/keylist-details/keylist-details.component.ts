@@ -5,6 +5,7 @@ import {Subject} from 'rxjs';
 import {takeUntil} from 'rxjs/operators';
 import {KeyItemEto} from '../common/to/KeyItemEto';
 import {KeyListCto} from '../common/to/KeyListCto';
+import {KeymanagementRestService} from '../keymanagement.rest.service';
 
 @Component({
   selector: 'app-keylist-details',
@@ -20,7 +21,8 @@ export class KeylistDetailsComponent implements OnInit, OnDestroy {
   private _unsub = new Subject();
 
   constructor(
-    private route: ActivatedRoute) {
+    private readonly service: KeymanagementRestService,
+    private readonly route: ActivatedRoute) {
   }
 
   ngOnInit() {
@@ -43,15 +45,24 @@ export class KeylistDetailsComponent implements OnInit, OnDestroy {
   }
 
   onDetailsCancel() {
-
+    this.selected = null;
   }
 
   onDetailsSaved(keyItem: KeyItemEto) {
-    console.log(keyItem);
+    const isNew = !keyItem.id;
+    this.service.saveKeyItem(keyItem)
+      .pipe(takeUntil(this._unsub))
+      .subscribe(
+        saved => {
+          this.keyListItems = isNew ? this.addItem(saved) : this.patchItems(saved);
+          this.selected = null;
+        },
+        error1 => console.log(error1));
   }
 
   onNew() {
     this.selected = {
+      keyListId: this.keyList.id,
       name: '',
       key: '',
       value: '',
@@ -65,6 +76,29 @@ export class KeylistDetailsComponent implements OnInit, OnDestroy {
   }
 
   onDelete() {
+    const id = this.selected.id;
+    this.service.deleteKeyItem(this.selected.id)
+      .pipe(takeUntil(this._unsub))
+      .subscribe(
+        value => {
+          this.keyListItems = this.removeItem(id);
+          this.selected = null;
+        },
+        error1 => console.log(error1));
+  }
 
+  private addItem(item: KeyItemEto): KeyItemEto[] {
+    // TODO client side sorting not performed
+    const res = this.patchItems(item);
+    res.push(item);
+    return res;
+  }
+
+  private patchItems(item: KeyItemEto): KeyItemEto[] {
+    return this.keyListItems.map(value => value.id === item.id ? item : value);
+  }
+
+  private removeItem(id: number): KeyItemEto[] {
+    return this.keyListItems.filter(value => value.id !== id);
   }
 }

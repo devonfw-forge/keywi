@@ -1,4 +1,4 @@
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
@@ -7,6 +7,7 @@ import {GeneralModule} from './general/general.module';
 import {KeymanagementModule} from './keymanagement/keymanagement.module';
 import {I18nService} from './general/i18n/i18n.service';
 import {TranslateModule} from '@ngx-translate/core';
+import {HttpRequestInterceptorService} from './general/authentication/http-request-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,9 @@ import {TranslateModule} from '@ngx-translate/core';
     GeneralModule,
     TranslateModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptorService, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

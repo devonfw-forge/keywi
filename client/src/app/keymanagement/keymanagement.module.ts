@@ -4,7 +4,6 @@ import {RouterModule} from '@angular/router';
 import {AgGridModule} from 'ag-grid-angular';
 import {KeylistDetailsComponent} from './keylist-details/keylist-details.component';
 import {KeylistOverviewComponent} from './keylist-overview/keylist-overview.component';
-import {KeymanagementRestService} from './keymanagement.rest.service';
 import {KeylistDetailsElementListComponent} from './keylist-details/keylist-details-element-list/keylist-details-element-list.component';
 import {KeylistDetailsElementDetailsComponent} from './keylist-details/keylist-details-element-details/keylist-details-element-details.component';
 import {KeywiMaterialModule} from '../general/keywi-material.module';
@@ -25,9 +24,6 @@ import {TranslateModule} from '@ngx-translate/core';
     FormsModule,
     ReactiveFormsModule,
     TranslateModule
-  ],
-  providers: [
-    KeymanagementRestService
   ]
 })
 export class KeymanagementModule {
