@@ -9,13 +9,15 @@ import {KeylistItemsDetailsComponent} from './keylist-items/keylist-items-detail
 import {KeywiMaterialModule} from '../general/keywi-material.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {TranslateModule} from '@ngx-translate/core';
+import { KeylistDetailsComponent } from './keylist-details/keylist-details.component';
 
 @NgModule({
   declarations: [
     KeylistOverviewComponent,
     KeylistItemsComponent,
     KeylistItemsListComponent,
-    KeylistItemsDetailsComponent],
+    KeylistItemsDetailsComponent,
+    KeylistDetailsComponent],
   imports: [
     CommonModule,
     RouterModule,

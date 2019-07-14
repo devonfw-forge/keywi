@@ -3,7 +3,7 @@ import {Router} from '@angular/router';
 import {AgGridAngular} from 'ag-grid-angular';
 import {GridApi} from 'ag-grid-community';
 import {KeyListEto} from '../common/to/KeyListEto';
-import {KEYLIST_DETAILS} from '../keymanagement-routing.module';
+import {KEYLIST_ITEMS} from '../keymanagement-routing.module';
 import {KeymanagementRestService} from '../keymanagement.rest.service';
 
 @Component({
@@ -37,7 +37,7 @@ export class KeylistOverviewComponent implements OnInit {
     const selectedKeyList = this.agGrid.api.getSelectedNodes();
     const selectedId = selectedKeyList.map(node => node.data.id)[0];
     if (selectedId) {
-      this.router.navigate([KEYLIST_DETAILS + '/' + selectedId]);
+      this.router.navigate([KEYLIST_ITEMS + '/' + selectedId]);
     }
   }
 
