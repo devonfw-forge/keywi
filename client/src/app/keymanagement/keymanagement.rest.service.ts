@@ -25,6 +25,10 @@ export class KeymanagementRestService {
     return this.http.get<KeyItemEto[]>(environment.REST_BASE_PATH + `/keyitem-for-list/${id}`);
   }
 
+  saveKeyList(keylist: KeyListEto): Observable<KeyListEto> {
+    return this.http.post<KeyListEto>(environment.REST_BASE_PATH + `/keylist`, keylist);
+  }
+
   saveKeyItem(item: KeyItemEto): Observable<KeyItemEto> {
     return this.http.post<KeyItemEto>(environment.REST_BASE_PATH + `/keyitem`, item);
   }

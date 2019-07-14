@@ -18,7 +18,14 @@ export class KeylistItemsDetailsComponent implements OnInit, OnChanges {
 
   formGroup: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(fb: FormBuilder) {
+    this.formGroup = fb.group({
+      key: new FormControl({value: '', disabled: !this.isNew}),
+      name: ['', Validators.required],
+      value: ['', Validators.required],
+      comment: ['', []],
+      disabled: [false, []]
+    });
   }
 
   get isNew(): boolean {
@@ -30,13 +37,6 @@ export class KeylistItemsDetailsComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-    this.formGroup = this.fb.group({
-      key: new FormControl({value: '', disabled: !this.isNew}),
-      name: ['', Validators.required],
-      value: ['', Validators.required],
-      comment: ['', []],
-      disabled: [false, []]
-    });
     this.updateForm();
   }
 

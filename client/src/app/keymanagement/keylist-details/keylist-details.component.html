@@ -1,3 +1,23 @@
-<p>
-  keylist-details works!
-</p>
+<div>
+  <a routerLink="/keylist-overview">{{ 'breadcrumb.keyLists' | translate }}</a> / <span>{{ keyList?.name }}</span>
+</div>
+<form [formGroup]="formGroup">
+  <div fxLayout="column" fxLayoutGap="10px">
+    <mat-form-field>
+      <mat-label>Key</mat-label>
+      <input matInput type="text" formControlName="key">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Name</mat-label>
+      <input matInput type="text" formControlName="name">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Comment</mat-label>
+      <textarea matInput rows="5" type="text" formControlName="comment"></textarea>
+    </mat-form-field>
+  </div>
+  <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="end">
+    <button mat-raised-button (click)="onCancel($event)">{{ 'general.dialog.cancel' | translate }}</button>
+    <button mat-raised-button (click)="onSave($event)">{{ 'general.dialog.save' | translate }}</button>
+  </div>
+</form>
