@@ -9,10 +9,10 @@ import {KeymanagementRestService} from '../keymanagement.rest.service';
 
 @Component({
   selector: 'app-keylist-details',
-  templateUrl: './keylist-details.component.html',
-  styleUrls: ['./keylist-details.component.css']
+  templateUrl: './keylist-items.component.html',
+  styleUrls: ['./keylist-items.component.css']
 })
-export class KeylistDetailsComponent implements OnInit, OnDestroy {
+export class KeylistItemsComponent implements OnInit, OnDestroy {
 
   keyList: KeyListEto;
   keyListItems: KeyItemEto[] = [];

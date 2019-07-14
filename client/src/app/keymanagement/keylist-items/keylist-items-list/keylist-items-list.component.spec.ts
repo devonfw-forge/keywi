@@ -1,18 +1,18 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {KeylistDetailsElementListComponent} from './keylist-details-element-list.component';
+import {KeylistItemsListComponent} from './keylist-items-list.component';
 import {AgGridModule} from 'ag-grid-angular';
 import {KeywiMaterialModule} from '../../../general/keywi-material.module';
 
-xdescribe('KeylistDetailsElementListComponent', () => {
-  let component: KeylistDetailsElementListComponent;
-  let fixture: ComponentFixture<KeylistDetailsElementListComponent>;
+xdescribe('KeylistItemsListComponent', () => {
+  let component: KeylistItemsListComponent;
+  let fixture: ComponentFixture<KeylistItemsListComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [KeylistDetailsElementListComponent],
+      declarations: [KeylistItemsListComponent],
       imports: [
-        AgGridModule.withComponents([KeylistDetailsElementListComponent]),
+        AgGridModule.withComponents([KeylistItemsListComponent]),
         KeywiMaterialModule
         // TranslateTestingModule.withTranslations('en', require('../../../general/i18n/translation_en.ts').default)
       ]
@@ -21,7 +21,7 @@ xdescribe('KeylistDetailsElementListComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(KeylistDetailsElementListComponent);
+    fixture = TestBed.createComponent(KeylistItemsListComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -7,10 +7,10 @@ import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-keylist-details-element-list',
-  templateUrl: './keylist-details-element-list.component.html',
-  styleUrls: ['./keylist-details-element-list.component.css']
+  templateUrl: './keylist-items-list.component.html',
+  styleUrls: ['./keylist-items-list.component.css']
 })
-export class KeylistDetailsElementListComponent implements OnInit, OnDestroy {
+export class KeylistItemsListComponent implements OnInit, OnDestroy {
 
   @Input()
   values: KeyItemEto[];

@@ -4,10 +4,10 @@ import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '
 
 @Component({
   selector: 'app-keylist-details-element-details',
-  templateUrl: './keylist-details-element-details.component.html',
-  styleUrls: ['./keylist-details-element-details.component.css']
+  templateUrl: './keylist-items-details.component.html',
+  styleUrls: ['./keylist-items-details.component.css']
 })
-export class KeylistDetailsElementDetailsComponent implements OnInit, OnChanges {
+export class KeylistItemsDetailsComponent implements OnInit, OnChanges {
 
   @Input()
   value: KeyItemEto;

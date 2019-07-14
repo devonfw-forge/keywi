@@ -1,12 +1,12 @@
 import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {KeylistDetailsComponent} from './keylist-details.component';
+import {KeylistItemsComponent} from './keylist-items.component';
 import {RouterTestingModule} from '@angular/router/testing';
 import {KeymanagementRestService} from '../keymanagement.rest.service';
 import {Observable, of} from 'rxjs';
 import {KeyListEto} from '../common/to/KeyListEto';
-import {KeylistDetailsElementDetailsComponent} from './keylist-details-element-details/keylist-details-element-details.component';
-import {KeylistDetailsElementListComponent} from './keylist-details-element-list/keylist-details-element-list.component';
+import {KeylistItemsDetailsComponent} from './keylist-items-details/keylist-items-details.component';
+import {KeylistItemsListComponent} from './keylist-items-list/keylist-items-list.component';
 import {KeywiMaterialModule} from '../../general/keywi-material.module';
 import {AgGridModule} from 'ag-grid-angular';
 import {NoopAnimationsModule} from '@angular/platform-browser/animations';
@@ -60,16 +60,16 @@ class ParamMapMock implements ParamMap {
   }
 }
 
-xdescribe('KeylistDetailsComponent', () => {
-  let component: KeylistDetailsComponent;
-  let fixture: ComponentFixture<KeylistDetailsComponent>;
+xdescribe('KeylistItemsComponent', () => {
+  let component: KeylistItemsComponent;
+  let fixture: ComponentFixture<KeylistItemsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [
-        KeylistDetailsComponent,
-        KeylistDetailsElementDetailsComponent,
-        KeylistDetailsElementListComponent
+        KeylistItemsComponent,
+        KeylistItemsDetailsComponent,
+        KeylistItemsListComponent
       ],
       imports: [
         RouterTestingModule.withRoutes([]),
@@ -78,7 +78,7 @@ xdescribe('KeylistDetailsComponent', () => {
         // TranslateTestingModule.withTranslations('en', require('../../general/i18n/translation_en.ts').default),
         FormsModule,
         ReactiveFormsModule,
-        AgGridModule.withComponents([KeylistDetailsElementListComponent])
+        AgGridModule.withComponents([KeylistItemsListComponent])
       ],
       providers: [
         {provide: KeymanagementRestService, useClass: KeymanagementRestServiceMock},
@@ -93,7 +93,7 @@ xdescribe('KeylistDetailsComponent', () => {
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(KeylistDetailsComponent);
+    fixture = TestBed.createComponent(KeylistItemsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

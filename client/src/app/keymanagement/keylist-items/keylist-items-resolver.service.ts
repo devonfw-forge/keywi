@@ -8,7 +8,7 @@ import {KeyListCto} from '../common/to/KeyListCto';
 @Injectable({
   providedIn: 'root'
 })
-export class KeylistDetailsResolverService implements Resolve<KeyListCto> {
+export class KeylistItemsResolverService implements Resolve<KeyListCto> {
 
   constructor(private restService: KeymanagementRestService, private router: Router) {
   }

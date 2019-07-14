@@ -1,8 +1,8 @@
 import {AuthenticationGuard} from '../general/authentication/authentication-guard.service';
-import {KeylistDetailsComponent} from './keylist-details/keylist-details.component';
+import {KeylistItemsComponent} from './keylist-items/keylist-items.component';
 import {KeylistOverviewComponent} from './keylist-overview/keylist-overview.component';
 import {Routes} from '@angular/router';
-import {KeylistDetailsResolverService} from './keylist-details/keylist-details-resolver.service';
+import {KeylistItemsResolverService} from './keylist-items/keylist-items-resolver.service';
 
 export const KEYLIST_OVERVIEW = 'keylist-overview';
 export const KEYLIST_DETAILS = 'keylist-details';
@@ -11,10 +11,10 @@ export const keymanagementRoutes: Routes = [
   {path: KEYLIST_OVERVIEW, component: KeylistOverviewComponent, canActivate: [AuthenticationGuard]},
   {
     path: KEYLIST_DETAILS + '/:id',
-    component: KeylistDetailsComponent,
+    component: KeylistItemsComponent,
     canActivate: [AuthenticationGuard],
     resolve: {
-      keyList: KeylistDetailsResolverService
+      keyList: KeylistItemsResolverService
     }
   }
 ];
