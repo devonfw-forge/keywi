@@ -27,6 +27,14 @@ export const keymanagementRoutes: Routes = [
     resolve: {
       keyList: KeylistDetailsResolverService
     }
+  },
+  {
+    path: KEYLIST_DETAILS,
+    component: KeylistDetailsComponent,
+    canActivate: [AuthenticationGuard],
+    resolve: {
+      keyList: KeylistDetailsResolverService
+    }
   }
 ];
 

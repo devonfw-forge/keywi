@@ -1,5 +1,4 @@
-import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@angular/router';
-import {KeyListCto} from '../common/to/KeyListCto';
+import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
 import {Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
 import {KeymanagementRestService} from '../keymanagement.rest.service';
@@ -10,11 +9,25 @@ import {KeyListEto} from '../common/to/KeyListEto';
 })
 export class KeylistDetailsResolverService implements Resolve<KeyListEto> {
 
-  constructor(private restService: KeymanagementRestService, private router: Router) {
+  constructor(private restService: KeymanagementRestService) {
   }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<KeyListEto> | KeyListEto {
     const id = +route.paramMap.get('id');
-    return this.restService.findKeyList(id);
+    if (id) {
+      return this.restService.findKeyList(id);
+    } else {
+      return {
+        id: 0,
+        name: '',
+        key: '',
+        comment: '',
+        disabled: false,
+        cacheable: true,
+        valueRequired: false,
+        ordering: 'NAME',
+        permission: ''
+      };
+    }
   }
 }

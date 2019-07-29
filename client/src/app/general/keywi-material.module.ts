@@ -5,7 +5,8 @@ import {
   MatCheckboxModule,
   MatFormFieldModule,
   MatInputModule,
-  MatRadioModule
+  MatRadioModule,
+  MatSelectModule
 } from '@angular/material';
 import {FlexLayoutModule} from '@angular/flex-layout';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -18,6 +19,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     MatRadioModule,
     MatCardModule,
     MatCheckboxModule,
+    MatSelectModule,
     FlexLayoutModule,
     BrowserAnimationsModule
   ],
@@ -26,6 +28,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     MatFormFieldModule,
     MatInputModule,
     MatRadioModule,
+    MatSelectModule,
     MatCardModule,
     MatCheckboxModule,
     FlexLayoutModule,

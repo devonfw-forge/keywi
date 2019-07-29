@@ -1,21 +1,24 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {AgGridAngular} from 'ag-grid-angular';
-import {GridApi} from 'ag-grid-community';
 import {KeyListEto} from '../common/to/KeyListEto';
 import {KEYLIST_DETAILS, KEYLIST_ITEMS} from '../keymanagement-routing.module';
 import {KeymanagementRestService} from '../keymanagement.rest.service';
+import {Subject} from 'rxjs';
+import {takeUntil} from 'rxjs/operators';
 
 @Component({
   selector: 'app-keylist-overview',
   templateUrl: './keylist-overview.component.html',
   styleUrls: ['./keylist-overview.component.css']
 })
-export class KeylistOverviewComponent implements OnInit {
+export class KeylistOverviewComponent implements OnInit, OnDestroy {
 
   keyLists: KeyListEto[];
   @ViewChild(AgGridAngular, {static: false})
   agGrid: AgGridAngular;
+
+  private readonly _unsub = new Subject();
 
   columnDefs = [
     {headerName: '', field: '', sortable: true, filter: true, checkboxSelection: true},
@@ -25,12 +28,17 @@ export class KeylistOverviewComponent implements OnInit {
     {headerName: 'Cacheable', field: 'cacheable', sortable: true, filter: true}
   ];
 
-  constructor(private keyManagementRestService: KeymanagementRestService,
-              private router: Router) {
+  constructor(private readonly keyManagementRestService: KeymanagementRestService,
+              private readonly router: Router) {
   }
 
   ngOnInit() {
     this.keyManagementRestService.findAllKeylists().subscribe(this.getData());
+  }
+
+  ngOnDestroy(): void {
+    this._unsub.next();
+    this._unsub.complete();
   }
 
   goToItems() {
@@ -41,7 +49,7 @@ export class KeylistOverviewComponent implements OnInit {
   }
 
   createNew() {
-
+    this.router.navigate([KEYLIST_DETAILS]);
   }
 
   goToDetails() {
@@ -52,7 +60,13 @@ export class KeylistOverviewComponent implements OnInit {
   }
 
   delete() {
-
+    const selectedId = this.getSelectedKeylistId();
+    this.keyManagementRestService.deleteKeyList(selectedId)
+      .pipe(takeUntil(this._unsub))
+      .subscribe(
+        this.removeElement(selectedId),
+        error1 => console.log(error1)
+      );
   }
 
   private getSelectedKeylistId() {
@@ -61,6 +75,10 @@ export class KeylistOverviewComponent implements OnInit {
   }
 
   private getData() {
-    return (value) => this.keyLists = value;
+    return value => this.keyLists = value;
+  }
+
+  private removeElement(id: number) {
+    return _ => this.keyLists = this.keyLists.filter(value => value.id !== id);
   }
 }

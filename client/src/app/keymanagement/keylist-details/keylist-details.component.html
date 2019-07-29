@@ -1,23 +1,43 @@
 <div>
   <a routerLink="/keylist-overview">{{ 'breadcrumb.keyLists' | translate }}</a> / <span>{{ keyList?.name }}</span>
 </div>
+<h1>{{ ('keyList.details.title.' + (isNew ? 'new' : 'edit')) | translate }}</h1>
 <form [formGroup]="formGroup">
-  <div fxLayout="column" fxLayoutGap="10px">
-    <mat-form-field>
-      <mat-label>Key</mat-label>
+  <div fxLayout="column" fxLayout.gt-md="row" fxLayoutGap="10px">
+    <mat-form-field fxFlex.gt-md="33">
+      <mat-label>{{'keyList.details.businessKey' | translate}}</mat-label>
       <input matInput type="text" formControlName="key">
     </mat-form-field>
-    <mat-form-field>
-      <mat-label>Name</mat-label>
+    <mat-form-field fxFlex.gt-md="67">
+      <mat-label>{{'keyList.details.name' | translate}}</mat-label>
       <input matInput type="text" formControlName="name">
     </mat-form-field>
+  </div>
+  <div fxLayout="column" fxLayoutGap="10px">
     <mat-form-field>
-      <mat-label>Comment</mat-label>
+      <mat-label>{{'keyList.details.comment' | translate}}</mat-label>
       <textarea matInput rows="5" type="text" formControlName="comment"></textarea>
     </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{'keyList.details.ordering' | translate}}</mat-label>
+      <mat-select formControlName="ordering">
+        <mat-option *ngFor="let ordering of orderings" [value]="ordering">
+          {{'keyList.details.orderings.' + ordering | translate}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{'keyList.details.permission' | translate}}</mat-label>
+      <input type="text" matInput formControlName="permission">
+    </mat-form-field>
+  </div>
+  <div fxLayout.gt-md="row" fxLayout="column" fxLayoutGap="10px">
+    <mat-checkbox formControlName="valueRequired">{{'keyList.details.required' | translate}}</mat-checkbox>
+    <mat-checkbox formControlName="cacheable">{{'keyList.details.cacheable' | translate}}</mat-checkbox>
+    <mat-checkbox formControlName="disabled">{{'keyList.details.disabled' | translate}}</mat-checkbox>
   </div>
   <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="end">
-    <button mat-raised-button (click)="onCancel($event)">{{ 'general.dialog.cancel' | translate }}</button>
-    <button mat-raised-button (click)="onSave($event)">{{ 'general.dialog.save' | translate }}</button>
+    <button mat-raised-button (click)="onCancel()">{{ 'general.dialog.cancel' | translate }}</button>
+    <button mat-raised-button (click)="onSave()">{{ 'general.dialog.save' | translate }}</button>
   </div>
 </form>

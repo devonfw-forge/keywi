@@ -1,9 +1,9 @@
 <div>
     <a routerLink="/keylist-overview">{{ 'breadcrumb.keyLists' | translate }}</a> / <span>{{ keyList?.name }}</span>
 </div>
-<h1>{{ keyList?.name }}: {{ 'keyListDetails.title' | translate }}</h1>
-<h2>{{ 'keyListDetails.subtitle' | translate }}</h2>
-<p>{{ 'keyListDetails.description' | translate }}</p>
+<h1>{{ keyList?.name }}: {{ 'keyListItems.title' | translate }}</h1>
+<h2>{{ 'keyListItems.subtitle' | translate }}</h2>
+<p>{{ 'keyListItems.description' | translate }}</p>
 <div fxLayout="column" fxLayoutGap="10px">
     <div fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="left">
         <button mat-raised-button (click)="onNew()">{{'general.dialog.new' | translate }}</button>

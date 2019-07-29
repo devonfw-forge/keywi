@@ -46,19 +46,13 @@ export class KeylistItemsDetailsComponent implements OnInit, OnChanges {
   }
 
   onSave($evt: any) {
-    const result = Object.assign({}, this.value, this.formGroup.value);
+    const result = {...this.value, ...this.formGroup.value};
     this.saveClicked.emit(result);
   }
 
   private updateForm() {
     if (this.value && this.formGroup) {
-      this.formGroup.reset({
-        key: this.value.key,
-        name: this.value.name,
-        value: this.value.value,
-        comment: this.value.comment,
-        disabled: this.value.disabled
-      });
+      this.formGroup.reset({...this.value});
       if (this.isNew) {
         this.keyFormControl.enable();
       } else {

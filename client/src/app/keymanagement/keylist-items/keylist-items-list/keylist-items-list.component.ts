@@ -29,9 +29,9 @@ export class KeylistItemsListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    const nameId = 'keyListDetails.list.headers.name';
-    const keyId = 'keyListDetails.list.headers.key';
-    const valueId = 'keyListDetails.list.headers.value';
+    const nameId = 'keyListItems.list.headers.name';
+    const keyId = 'keyListItems.list.headers.key';
+    const valueId = 'keyListItems.list.headers.value';
 
     this.translate.get([
       nameId,

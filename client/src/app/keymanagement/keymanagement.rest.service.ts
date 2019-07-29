@@ -21,6 +21,10 @@ export class KeymanagementRestService {
     return this.http.get<KeyListEto>(environment.REST_BASE_PATH + `/keylist/${id}`);
   }
 
+  deleteKeyList(id: number): Observable<HttpResponse<Object>> {
+    return this.http.delete(environment.REST_BASE_PATH + `/keylist/${id}`, {observe: 'response'});
+  }
+
   findKeyItemsForKeyList(id: number): Observable<KeyItemEto[]> {
     return this.http.get<KeyItemEto[]>(environment.REST_BASE_PATH + `/keyitem-for-list/${id}`);
   }
