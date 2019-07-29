@@ -21,8 +21,8 @@
       <mat-checkbox formControlName="disabled">{{ 'keyListItems.details.disabled' | translate }}</mat-checkbox>
     </mat-card-content>
     <mat-card-actions fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="end">
-      <button mat-raised-button (click)="onCancel($event)">{{ 'general.dialog.cancel' | translate }}</button>
-      <button mat-raised-button (click)="onSave($event)">{{ 'general.dialog.save' | translate }}</button>
+      <button mat-raised-button (click)="onCancel()">{{ 'general.dialog.cancel' | translate }}</button>
+      <button mat-raised-button (click)="onSave()">{{ 'general.dialog.save' | translate }}</button>
     </mat-card-actions>
   </mat-card>
 </form>

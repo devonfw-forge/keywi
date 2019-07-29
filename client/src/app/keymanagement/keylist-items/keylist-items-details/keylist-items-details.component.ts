@@ -40,12 +40,12 @@ export class KeylistItemsDetailsComponent implements OnInit, OnChanges {
     this.updateForm();
   }
 
-  onCancel($evt: any) {
+  onCancel() {
     this.updateForm();
     this.cancelClicked.emit();
   }
 
-  onSave($evt: any) {
+  onSave() {
     const result = {...this.value, ...this.formGroup.value};
     this.saveClicked.emit(result);
   }
