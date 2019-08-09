@@ -46,7 +46,7 @@ export class KeylistDetailsComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsub))
       .subscribe((data: { keyList: KeyListEto }) => {
         this.keyList = data.keyList;
-        console.log(this.keyList);
+        console.log('KL: ' + this.keyList);
         this.updateForm();
       });
   }
@@ -62,7 +62,6 @@ export class KeylistDetailsComponent implements OnInit, OnDestroy {
 
   onSave() {
     const modified = {...this.keyList, ...this.formGroup.value};
-    console.log(modified);
     this.service.saveKeyList(modified)
       .pipe(takeUntil(this._unsub))
       .subscribe(value => {
