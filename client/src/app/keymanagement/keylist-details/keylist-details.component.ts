@@ -6,6 +6,7 @@ import {takeUntil} from 'rxjs/operators';
 import {Subject} from 'rxjs';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {KEYLIST_OVERVIEW} from '../keymanagement-routing.module';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-keylist-details',
@@ -24,7 +25,8 @@ export class KeylistDetailsComponent implements OnInit, OnDestroy {
     private readonly service: KeymanagementRestService,
     private readonly route: ActivatedRoute,
     private readonly router: Router,
-    fb: FormBuilder) {
+    private readonly toastr: ToastrService,
+    private readonly fb: FormBuilder) {
     this.formGroup = fb.group({
       key: ['', Validators.required],
       name: ['', Validators.required],
@@ -46,7 +48,6 @@ export class KeylistDetailsComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this._unsub))
       .subscribe((data: { keyList: KeyListEto }) => {
         this.keyList = data.keyList;
-        console.log('KL: ' + this.keyList);
         this.updateForm();
       });
   }
@@ -67,7 +68,7 @@ export class KeylistDetailsComponent implements OnInit, OnDestroy {
       .subscribe(value => {
         this.router.navigate([KEYLIST_OVERVIEW]);
       }, error1 => {
-        console.log(error1);
+        this.toastr.error(error1);
       });
   }
 
