@@ -5,7 +5,9 @@ export default {
       save: 'Save',
       delete: 'Delete',
       deactivate: 'Deactivate',
-      cancel: 'Cancel'
+      cancel: 'Cancel',
+      yes: 'Yes',
+      no: 'No'
     },
     message: {
       areYouSure: 'Are you sure?'
@@ -34,6 +36,9 @@ export default {
       required: 'Required',
       cacheable: 'Cacheable',
       disabled: 'Disabled'
+    },
+    delete: {
+      confirmTitle: 'Deleting selected key list'
     }
   },
   keyListItems: {
@@ -57,6 +62,9 @@ export default {
       value: 'Value',
       comment: 'Comment',
       disabled: 'Disabled'
+    },
+    delete: {
+      confirmTitle: 'Deleting selected key list item'
     }
   }
 };
