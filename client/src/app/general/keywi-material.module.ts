@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {
   MatButtonModule,
   MatCardModule,
-  MatCheckboxModule,
+  MatCheckboxModule, MatDialogModule,
   MatFormFieldModule,
   MatInputModule,
   MatRadioModule,
@@ -20,6 +20,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     MatCardModule,
     MatCheckboxModule,
     MatSelectModule,
+    MatDialogModule,
     FlexLayoutModule,
     BrowserAnimationsModule
   ],
@@ -31,6 +32,7 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
     MatSelectModule,
     MatCardModule,
     MatCheckboxModule,
+    MatDialogModule,
     FlexLayoutModule,
     BrowserAnimationsModule
   ]

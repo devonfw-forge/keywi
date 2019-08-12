@@ -2,10 +2,11 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {KeyListEto} from '../common/to/KeyListEto';
 import {Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
+import {filter, switchMap, takeUntil} from 'rxjs/operators';
 import {KeyItemEto} from '../common/to/KeyItemEto';
 import {KeyListCto} from '../common/to/KeyListCto';
 import {KeymanagementRestService} from '../keymanagement.rest.service';
+import {DialogService} from '../../general/dialog/dialog.service';
 
 @Component({
   selector: 'app-keylist-details',
@@ -22,6 +23,7 @@ export class KeylistItemsComponent implements OnInit, OnDestroy {
 
   constructor(
     private readonly service: KeymanagementRestService,
+    private readonly dialogService: DialogService,
     private readonly route: ActivatedRoute) {
   }
 
@@ -77,14 +79,21 @@ export class KeylistItemsComponent implements OnInit, OnDestroy {
 
   onDelete() {
     const id = this.selected.id;
-    this.service.deleteKeyItem(this.selected.id)
-      .pipe(takeUntil(this._unsub))
+
+    this.dialogService.openConfirmationDialog({
+      titleKey: 'keyListItems.delete.confirmTitle'
+    })
+      .pipe(
+        takeUntil(this._unsub),
+        filter(value => value === true),
+        switchMap(_ => this.service.deleteKeyItem(this.selected.id)))
       .subscribe(
         value => {
           this.keyListItems = this.removeItem(id);
           this.selected = null;
         },
         error1 => console.log(error1));
+
   }
 
   private addItem(item: KeyItemEto): KeyItemEto[] {

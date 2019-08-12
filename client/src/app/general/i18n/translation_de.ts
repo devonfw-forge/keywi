@@ -6,6 +6,9 @@ export default {
       delete: 'Delete',
       deactivate: 'Deactivate',
       cancel: 'Cancel'
+    },
+    message: {
+      areYouSure: 'Are you sure?'
     }
   },
   breadcrumb: {
