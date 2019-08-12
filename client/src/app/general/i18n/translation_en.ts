@@ -36,6 +36,9 @@ export default {
       required: 'Required',
       cacheable: 'Cacheable',
       disabled: 'Disabled'
+    },
+    delete: {
+      confirmTitle: 'Deleting selected key list'
     }
   },
   keyListItems: {

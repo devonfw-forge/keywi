@@ -5,7 +5,8 @@ import {KeyListEto} from '../common/to/KeyListEto';
 import {KEYLIST_DETAILS, KEYLIST_ITEMS} from '../keymanagement-routing.module';
 import {KeymanagementRestService} from '../keymanagement.rest.service';
 import {Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
+import {filter, switchMap, takeUntil} from 'rxjs/operators';
+import {DialogService} from '../../general/dialog/dialog.service';
 
 @Component({
   selector: 'app-keylist-overview',
@@ -28,12 +29,16 @@ export class KeylistOverviewComponent implements OnInit, OnDestroy {
     {headerName: 'Cacheable', field: 'cacheable', sortable: true, filter: true}
   ];
 
-  constructor(private readonly keyManagementRestService: KeymanagementRestService,
-              private readonly router: Router) {
+  constructor(
+    private readonly keyManagementRestService: KeymanagementRestService,
+    private readonly dialogService: DialogService,
+    private readonly router: Router) {
   }
 
   ngOnInit() {
-    this.keyManagementRestService.findAllKeylists().subscribe(this.getData());
+    this.keyManagementRestService.findAllKeylists()
+      .pipe(takeUntil(this._unsub))
+      .subscribe(this.getData());
   }
 
   ngOnDestroy(): void {
@@ -61,8 +66,13 @@ export class KeylistOverviewComponent implements OnInit, OnDestroy {
 
   delete() {
     const selectedId = this.getSelectedKeylistId();
-    this.keyManagementRestService.deleteKeyList(selectedId)
-      .pipe(takeUntil(this._unsub))
+    this.dialogService.openConfirmationDialog({
+      titleKey: 'keyList.delete.confirmTitle'
+    })
+      .pipe(
+        takeUntil(this._unsub),
+        filter(value => value === true),
+        switchMap(_ => this.keyManagementRestService.deleteKeyList(selectedId)))
       .subscribe(
         this.removeElement(selectedId),
         error1 => console.log(error1)
