@@ -58,7 +58,7 @@ public interface KeymanagementRestService extends RestService {
    * @param id ID of the {@link KeyListEto} to be deleted
    */
   @DELETE
-  @Path("/keyitem/{id}/")
+  @Path("/keylist/{id}/")
   void deleteKeyList(@PathParam("id") long id);
 
   /**

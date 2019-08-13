@@ -1,11 +1,12 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {KeyListEto} from '../common/to/KeyListEto';
-import {Subject} from 'rxjs';
-import {takeUntil} from 'rxjs/operators';
-import {KeyItemEto} from '../common/to/KeyItemEto';
-import {KeyListCto} from '../common/to/KeyListCto';
+import {allKeyListOrderings, KeyListEto} from '../common/to/KeyListEto';
 import {KeymanagementRestService} from '../keymanagement.rest.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {takeUntil} from 'rxjs/operators';
+import {Subject} from 'rxjs';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {KEYLIST_OVERVIEW} from '../keymanagement-routing.module';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-keylist-details',
@@ -15,23 +16,39 @@ import {KeymanagementRestService} from '../keymanagement.rest.service';
 export class KeylistDetailsComponent implements OnInit, OnDestroy {
 
   keyList: KeyListEto;
-  keyListItems: KeyItemEto[] = [];
-  selected?: KeyItemEto = null;
+  formGroup: FormGroup;
+  orderings = allKeyListOrderings();
 
   private _unsub = new Subject();
 
   constructor(
     private readonly service: KeymanagementRestService,
-    private readonly route: ActivatedRoute) {
+    private readonly route: ActivatedRoute,
+    private readonly router: Router,
+    private readonly toastr: ToastrService,
+    private readonly fb: FormBuilder) {
+    this.formGroup = fb.group({
+      key: ['', Validators.required],
+      name: ['', Validators.required],
+      comment: [''],
+      disabled: [false],
+      ordering: ['NAME', Validators.required],
+      valueRequired: [false],
+      permission: [''],
+      cacheable: [false]
+    });
+  }
+
+  get isNew(): boolean {
+    return this.keyList && !this.keyList.id;
   }
 
   ngOnInit() {
     this.route.data
       .pipe(takeUntil(this._unsub))
-      .subscribe((data: { keyList: KeyListCto }) => {
-        this.keyList = data.keyList.keyList;
-        this.keyListItems = data.keyList.keyItems;
-        console.log(this.keyList);
+      .subscribe((data: { keyList: KeyListEto }) => {
+        this.keyList = data.keyList;
+        this.updateForm();
       });
   }
 
@@ -40,65 +57,24 @@ export class KeylistDetailsComponent implements OnInit, OnDestroy {
     this._unsub.complete();
   }
 
-  onRowSelected(item?: KeyItemEto) {
-    this.selected = item;
+  onCancel() {
+    this.router.navigate([KEYLIST_OVERVIEW]);
   }
 
-  onDetailsCancel() {
-    this.selected = null;
-  }
-
-  onDetailsSaved(keyItem: KeyItemEto) {
-    const isNew = !keyItem.id;
-    this.service.saveKeyItem(keyItem)
+  onSave() {
+    const modified = {...this.keyList, ...this.formGroup.value};
+    this.service.saveKeyList(modified)
       .pipe(takeUntil(this._unsub))
-      .subscribe(
-        saved => {
-          this.keyListItems = isNew ? this.addItem(saved) : this.patchItems(saved);
-          this.selected = null;
-        },
-        error1 => console.log(error1));
+      .subscribe(value => {
+        this.router.navigate([KEYLIST_OVERVIEW]);
+      }, error1 => {
+        this.toastr.error(error1);
+      });
   }
 
-  onNew() {
-    this.selected = {
-      keyListId: this.keyList.id,
-      name: '',
-      key: '',
-      value: '',
-      comment: '',
-      disabled: false
-    };
-  }
-
-  onDeactivate() {
-
-  }
-
-  onDelete() {
-    const id = this.selected.id;
-    this.service.deleteKeyItem(this.selected.id)
-      .pipe(takeUntil(this._unsub))
-      .subscribe(
-        value => {
-          this.keyListItems = this.removeItem(id);
-          this.selected = null;
-        },
-        error1 => console.log(error1));
-  }
-
-  private addItem(item: KeyItemEto): KeyItemEto[] {
-    // TODO client side sorting not performed
-    const res = this.patchItems(item);
-    res.push(item);
-    return res;
-  }
-
-  private patchItems(item: KeyItemEto): KeyItemEto[] {
-    return this.keyListItems.map(value => value.id === item.id ? item : value);
-  }
-
-  private removeItem(id: number): KeyItemEto[] {
-    return this.keyListItems.filter(value => value.id !== id);
+  private updateForm() {
+    if (this.keyList) {
+      this.formGroup.patchValue(this.keyList);
+    }
   }
 }

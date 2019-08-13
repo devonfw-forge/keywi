@@ -8,6 +8,8 @@ import {KeymanagementModule} from './keymanagement/keymanagement.module';
 import {I18nService} from './general/i18n/i18n.service';
 import {TranslateModule} from '@ngx-translate/core';
 import {HttpRequestInterceptorService} from './general/authentication/http-request-interceptor.service';
+import {ToastrModule} from 'ngx-toastr';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import {HttpRequestInterceptorService} from './general/authentication/http-reque
     KeymanagementModule,
     AppRoutingModule,
     GeneralModule,
-    TranslateModule.forRoot()
+    TranslateModule.forRoot(),
+    BrowserAnimationsModule,
+    ToastrModule.forRoot()
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: HttpRequestInterceptorService, multi: true}

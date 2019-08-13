@@ -4,10 +4,10 @@ import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '
 
 @Component({
   selector: 'app-keylist-details-element-details',
-  templateUrl: './keylist-details-element-details.component.html',
-  styleUrls: ['./keylist-details-element-details.component.css']
+  templateUrl: './keylist-items-details.component.html',
+  styleUrls: ['./keylist-items-details.component.css']
 })
-export class KeylistDetailsElementDetailsComponent implements OnInit, OnChanges {
+export class KeylistItemsDetailsComponent implements OnInit, OnChanges {
 
   @Input()
   value: KeyItemEto;
@@ -18,7 +18,14 @@ export class KeylistDetailsElementDetailsComponent implements OnInit, OnChanges 
 
   formGroup: FormGroup;
 
-  constructor(private fb: FormBuilder) {
+  constructor(fb: FormBuilder) {
+    this.formGroup = fb.group({
+      key: new FormControl({value: '', disabled: !this.isNew}),
+      name: ['', Validators.required],
+      value: ['', Validators.required],
+      comment: ['', []],
+      disabled: [false, []]
+    });
   }
 
   get isNew(): boolean {
@@ -30,35 +37,22 @@ export class KeylistDetailsElementDetailsComponent implements OnInit, OnChanges 
   }
 
   ngOnInit() {
-    this.formGroup = this.fb.group({
-      key: new FormControl({value: '', disabled: !this.isNew}),
-      name: ['', Validators.required],
-      value: ['', Validators.required],
-      comment: ['', []],
-      disabled: [false, []]
-    });
     this.updateForm();
   }
 
-  onCancel($evt: any) {
+  onCancel() {
     this.updateForm();
     this.cancelClicked.emit();
   }
 
-  onSave($evt: any) {
-    const result = Object.assign({}, this.value, this.formGroup.value);
+  onSave() {
+    const result = {...this.value, ...this.formGroup.value};
     this.saveClicked.emit(result);
   }
 
   private updateForm() {
     if (this.value && this.formGroup) {
-      this.formGroup.reset({
-        key: this.value.key,
-        name: this.value.name,
-        value: this.value.value,
-        comment: this.value.comment,
-        disabled: this.value.disabled
-      });
+      this.formGroup.reset({...this.value});
       if (this.isNew) {
         this.keyFormControl.enable();
       } else {

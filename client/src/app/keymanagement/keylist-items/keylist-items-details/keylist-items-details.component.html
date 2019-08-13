@@ -1,0 +1,28 @@
+<form [formGroup]="formGroup">
+  <mat-card *ngIf="value">
+    <mat-card-title>{{ ('keyListItems.details.title.' + (isNew ? 'new' : 'edit')) | translate }}</mat-card-title>
+    <mat-card-content fxLayout="column" fxLayoutGap="10px">
+      <mat-form-field>
+        <mat-label>{{ 'keyListItems.details.businessKey' | translate }}</mat-label>
+        <input matInput type="text" formControlName="key">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>{{ 'keyListItems.details.name' | translate }}</mat-label>
+        <input matInput type="text" formControlName="name">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>{{ 'keyListItems.details.value' | translate }}</mat-label>
+        <input matInput type="text" formControlName="value">
+      </mat-form-field>
+      <mat-form-field>
+        <mat-label>{{ 'keyListItems.details.comment' | translate }}</mat-label>
+        <textarea matInput rows="5" formControlName="comment"></textarea>
+      </mat-form-field>
+      <mat-checkbox formControlName="disabled">{{ 'keyListItems.details.disabled' | translate }}</mat-checkbox>
+    </mat-card-content>
+    <mat-card-actions fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="end">
+      <button mat-raised-button (click)="onCancel()">{{ 'general.dialog.cancel' | translate }}</button>
+      <button mat-raised-button (click)="onSave()">{{ 'general.dialog.save' | translate }}</button>
+    </mat-card-actions>
+  </mat-card>
+</form>

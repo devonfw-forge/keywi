@@ -1,104 +1,81 @@
-import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {async} from '@angular/core/testing';
 
 import {KeylistDetailsComponent} from './keylist-details.component';
-import {RouterTestingModule} from '@angular/router/testing';
-import {KeymanagementRestService} from '../keymanagement.rest.service';
-import {Observable, of} from 'rxjs';
+import {FormBuilder} from '@angular/forms';
+import {of, Subject, throwError} from 'rxjs';
 import {KeyListEto} from '../common/to/KeyListEto';
-import {KeylistDetailsElementDetailsComponent} from './keylist-details-element-details/keylist-details-element-details.component';
-import {KeylistDetailsElementListComponent} from './keylist-details-element-list/keylist-details-element-list.component';
-import {KeywiMaterialModule} from '../../general/keywi-material.module';
-import {AgGridModule} from 'ag-grid-angular';
-import {NoopAnimationsModule} from '@angular/platform-browser/animations';
-import {KeyItemEto} from '../common/to/KeyItemEto';
-import {ActivatedRoute, ParamMap} from '@angular/router';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {KEYLIST_OVERVIEW} from '../keymanagement-routing.module';
+import {error} from 'util';
 
-class KeymanagementRestServiceMock {
-  findAllKeylists(): Observable<KeyListEto[]> {
-    return of([]);
-  }
-
-  findKeyItemsForKeyList(id: number): Observable<KeyItemEto[]> {
-    return of([]);
-  }
-
-  findKeyList(id: number): Observable<KeyListEto> {
-    return of({
-      name: '',
-      key: '',
-      ordering: {
-        columnName: '',
-        propertyName: ''
-      },
-      valueRequired: false,
-      permission: '',
-      cacheable: false,
-      disabled: false,
-      comment: '',
-      id: 1,
-      modificationCounter: 1,
-      revision: 1,
-      modificationDate: 1
-    });
-  }
-}
-
-class ParamMapMock implements ParamMap {
-  readonly keys = ['id'];
-
-  get(name: string): string | null {
-    return '1';
-  }
-
-  getAll(name: string): string[] {
-    return ['1'];
-  }
-
-  has(name: string): boolean {
-    return true;
-  }
-}
-
-xdescribe('KeylistDetailsComponent', () => {
+describe('KeylistDetailsComponent', () => {
   let component: KeylistDetailsComponent;
-  let fixture: ComponentFixture<KeylistDetailsComponent>;
+  let fakeService: any;
+  let fakeActivatedRoute: any;
+  let fakeRouter: any;
+  let fakeToastr: any;
+  let data$: Subject<{ keyList: KeyListEto }>;
+  let keyList: KeyListEto;
 
   beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [
-        KeylistDetailsComponent,
-        KeylistDetailsElementDetailsComponent,
-        KeylistDetailsElementListComponent
-      ],
-      imports: [
-        RouterTestingModule.withRoutes([]),
-        KeywiMaterialModule,
-        NoopAnimationsModule,
-        // TranslateTestingModule.withTranslations('en', require('../../general/i18n/translation_en.ts').default),
-        FormsModule,
-        ReactiveFormsModule,
-        AgGridModule.withComponents([KeylistDetailsElementListComponent])
-      ],
-      providers: [
-        {provide: KeymanagementRestService, useClass: KeymanagementRestServiceMock},
-        {
-          provide: ActivatedRoute, useValue: {
-            data: of({keyList: {name: 'foo'}}),
-            paramMap: of(new ParamMapMock())
-          }
-        }
-      ]
-    });
-  }));
+    keyList = {
+      id: 10,
+      key: 'foo',
+      name: 'Foo',
+      comment: 'Foo key list',
+      ordering: 'NAME',
+      valueRequired: true,
+      cacheable: true,
+      disabled: false,
+      permission: ''
+    };
+    data$ = new Subject<{ keyList: KeyListEto }>();
+    fakeService = {
+      saveKeyList: () => {
+      }
+    };
+    fakeActivatedRoute = {data: data$};
+    fakeRouter = {
+      navigate: () => {
+      }
+    };
+    fakeToastr = {
+      error: () => {
+      }
+    };
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(KeylistDetailsComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
+    component = new KeylistDetailsComponent(fakeService, fakeActivatedRoute, fakeRouter, fakeToastr, new FormBuilder());
+    component.ngOnInit();
+  }));
 
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should save key list details and go to overview', () => {
+    // given
+    spyOn(fakeService, 'saveKeyList').and.returnValue(of({...keyList}));
+    spyOn(fakeRouter, 'navigate');
+    // when
+    data$.next({keyList: {...keyList}});
+    component.onSave();
+    // then
+    expect(fakeService.saveKeyList).toHaveBeenCalledWith({...keyList});
+    expect(fakeRouter.navigate).toHaveBeenCalledWith([KEYLIST_OVERVIEW]);
+  });
+
+  it('should show error message in case on backend error', () => {
+    // given
+    const errMessage = 'Error!';
+    spyOn(fakeService, 'saveKeyList').and.returnValue(throwError(errMessage));
+    spyOn(fakeRouter, 'navigate');
+    spyOn(fakeToastr, 'error');
+    // when
+    data$.next({keyList: {...keyList}});
+    component.onSave();
+    // then
+    expect(fakeService.saveKeyList).toHaveBeenCalledWith({...keyList});
+    expect(fakeRouter.navigate).not.toHaveBeenCalled();
+    expect(fakeToastr.error).toHaveBeenCalledWith(errMessage);
+  });
+
 });

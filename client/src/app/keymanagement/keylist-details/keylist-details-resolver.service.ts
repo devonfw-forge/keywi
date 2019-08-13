@@ -1,37 +1,33 @@
+import {ActivatedRouteSnapshot, Resolve, RouterStateSnapshot} from '@angular/router';
+import {Observable} from 'rxjs';
 import {Injectable} from '@angular/core';
-import {ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot} from '@angular/router';
-import {EMPTY, Observable, of, zip} from 'rxjs';
 import {KeymanagementRestService} from '../keymanagement.rest.service';
-import {mergeMap, take} from 'rxjs/operators';
-import {KeyListCto} from '../common/to/KeyListCto';
+import {KeyListEto} from '../common/to/KeyListEto';
 
 @Injectable({
   providedIn: 'root'
 })
-export class KeylistDetailsResolverService implements Resolve<KeyListCto> {
+export class KeylistDetailsResolverService implements Resolve<KeyListEto> {
 
-  constructor(private restService: KeymanagementRestService, private router: Router) {
+  constructor(private restService: KeymanagementRestService) {
   }
 
-  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<KeyListCto> | Observable<never> {
+  resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<KeyListEto> | KeyListEto {
     const id = +route.paramMap.get('id');
-
-    return zip(
-      this.restService.findKeyList(id),
-      this.restService.findKeyItemsForKeyList(id))
-      .pipe(
-        take(1),
-        mergeMap(array => {
-          if (array[0]) {
-            return of({
-              keyList: array[0],
-              keyItems: array[1]
-            });
-          } else { // not found
-            this.router.navigate(['/']);
-            return EMPTY;
-          }
-        })
-      );
+    if (id) {
+      return this.restService.findKeyList(id);
+    } else {
+      return {
+        id: 0,
+        name: '',
+        key: '',
+        comment: '',
+        disabled: false,
+        cacheable: true,
+        valueRequired: false,
+        ordering: 'NAME',
+        permission: ''
+      };
+    }
   }
 }

@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>{{ titleKey | translate }}</h1>
+<mat-dialog-content>
+  <p fxLayout="row" fxLayoutGap="10px">{{ bodyKey | translate }}</p>
+</mat-dialog-content>
+<mat-dialog-actions fxLayout="row" fxLayoutGap="10px" fxLayoutAlign="end">
+  <button mat-raised-button mat-dialog-close>{{ 'general.dialog.no' | translate }}</button>
+  <button mat-raised-button (click)="onConfirm()">{{ 'general.dialog.yes' | translate }}</button>
+</mat-dialog-actions>
