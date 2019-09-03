@@ -2,21 +2,17 @@ package com.devonfw.keywi.keymanagement.logic.base.usecase;
 
 import javax.inject.Inject;
 
-import com.devonfw.keywi.general.logic.base.AbstractUc;
 import com.devonfw.keywi.keymanagement.dataaccess.api.repo.KeyListRepository;
 
 /**
- * Abstract use case for KeyLists, which provides access to the commonly necessary data access objects.
+ * Abstract use case for {@link com.devonfw.keywi.keymanagement.common.api.KeyList}s providing database access.
  */
-public class AbstractKeyListUc extends AbstractUc {
+public class AbstractKeyListUc extends AbstractKeyObjectUc {
 
-  /** @see #getKeyListRepository() */
   @Inject
   private KeyListRepository keyListRepository;
 
   /**
-   * Returns the field 'keyListRepository'.
-   * 
    * @return the {@link KeyListRepository} instance.
    */
   public KeyListRepository getKeyListRepository() {

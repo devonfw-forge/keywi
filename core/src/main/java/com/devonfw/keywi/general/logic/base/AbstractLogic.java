@@ -2,13 +2,20 @@ package com.devonfw.keywi.general.logic.base;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 
 import com.devonfw.keywi.general.common.base.AbstractBeanMapperSupport;
 import com.devonfw.module.basic.common.api.entity.GenericEntity;
@@ -98,4 +105,48 @@ public abstract class AbstractLogic extends AbstractBeanMapperSupport {
     return new PageImpl<>(etoList, page.getPageable(), page.getTotalElements());
   }
 
+  /**
+   * @param permissions required permission(s)
+   * @throws AccessDeniedException in case there is no current user logged-in or he is missing one of the given
+   *         {@code permissions}.
+   */
+  protected void requirePermissions(String... permissions) throws AccessDeniedException {
+
+    Set<String> userPermissions = getUserPermissions();
+    for (String permission : permissions) {
+      boolean authorized = userPermissions.contains(permission);
+      if (!authorized) {
+        throw new AccessDeniedException("Permission required: " + permission);
+      }
+    }
+  }
+
+  private Set<String> getUserPermissions() {
+
+    Set<String> userPermissions = new HashSet<>();
+    Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+    if (authentication != null) {
+      for (GrantedAuthority authority : authentication.getAuthorities()) {
+        userPermissions.add(authority.getAuthority());
+      }
+    }
+    return userPermissions;
+  }
+
+  /**
+   * @param permissions die erforderliche(n) Berechtigung(en).
+   * @throws AccessDeniedException falls der aktuell angemeldete Nutzer keine von der erforderlichen Berechtigungen
+   *         besitzt.
+   */
+  protected void requireAnyPermission(String... permissions) throws AccessDeniedException {
+
+    Set<String> userPermissions = getUserPermissions();
+    for (String permission : permissions) {
+      boolean authorized = userPermissions.contains(permission);
+      if (authorized) {
+        return;
+      }
+    }
+    throw new AccessDeniedException("Permission required out of " + Arrays.toString(permissions));
+  }
 }

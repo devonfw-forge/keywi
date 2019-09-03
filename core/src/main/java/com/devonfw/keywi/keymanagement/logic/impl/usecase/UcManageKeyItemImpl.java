@@ -48,6 +48,11 @@ public class UcManageKeyItemImpl extends AbstractKeyItemUc implements UcManageKe
     Objects.requireNonNull(keyItem, "keyItem");
 
     KeyItemEntity keyItemEntity = getBeanMapper().map(keyItem, KeyItemEntity.class);
+    Long id = keyItem.getId();
+    if (id != null) {
+      KeyItemEntity keyItemFromDb = getKeyItemRepository().find(id);
+      verifyKeyNotModified(keyItem, keyItemFromDb);
+    }
 
     // initialize, validate keyItemEntity here if necessary
     KeyItemEntity resultEntity = getKeyItemRepository().save(keyItemEntity);

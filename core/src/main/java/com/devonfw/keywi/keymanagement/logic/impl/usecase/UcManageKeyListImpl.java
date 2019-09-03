@@ -1,6 +1,7 @@
 package com.devonfw.keywi.keymanagement.logic.impl.usecase;
 
 import java.util.Objects;
+import java.util.Optional;
 
 import javax.annotation.security.RolesAllowed;
 import javax.inject.Named;
@@ -36,9 +37,18 @@ public class UcManageKeyListImpl extends AbstractKeyListUc implements UcManageKe
     if (id == null) {
       return false;
     }
-    getKeyListRepository().deleteById(id.getId());
-    LOG.debug("The keyList with id '{}' has been deleted.", id);
-    return true;
+    Optional<KeyListEntity> keyList = getKeyListRepository().findById(id.getId());
+    if (keyList.isPresent()) {
+      KeyListEntity entity = keyList.get();
+      String permission = entity.getPermission();
+      if ((permission != null) && !permission.isEmpty()) {
+        requireAnyPermission(permission, ApplicationAccessControlConfig.GROUP_ADMIN);
+      }
+      getKeyListRepository().delete(entity);
+      LOG.debug("The keyList with id '{}' has been deleted.", id);
+      return true;
+    }
+    return false;
   }
 
   @Override
@@ -49,7 +59,18 @@ public class UcManageKeyListImpl extends AbstractKeyListUc implements UcManageKe
 
     KeyListEntity keyListEntity = getBeanMapper().map(keyList, KeyListEntity.class);
 
-    // initialize, validate keyListEntity here if necessary
+    KeyList entity = keyList;
+    Long id = keyList.getId();
+    if (id != null) {
+      KeyListEntity keyListFromDb = getKeyListRepository().find(id);
+      verifyKeyNotModified(keyList, keyListFromDb);
+      entity = keyListFromDb;
+    }
+    String permission = entity.getPermission();
+    if ((permission != null) && !permission.isEmpty()) {
+      requireAnyPermission(permission, ApplicationAccessControlConfig.GROUP_ADMIN);
+    }
+
     KeyListEntity resultEntity = getKeyListRepository().save(keyListEntity);
     LOG.debug("KeyList with id '{}' has been created.", resultEntity.getId());
     return getBeanMapper().map(resultEntity, KeyListEto.class);
