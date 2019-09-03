@@ -9,10 +9,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.devonfw.keywi.general.service.base.test.RestServiceTest;
-import com.devonfw.keywi.keymanagement.KeyListCountryTestAspect;
 import com.devonfw.keywi.keymanagement.logic.api.to.KeyItemEto;
 import com.devonfw.keywi.keymanagement.logic.api.to.KeyItemSearchCriteriaTo;
 import com.devonfw.keywi.keymanagement.logic.api.to.KeyListEto;
+import com.devonfw.keywi.keymanagement.logic.impl.KeyListCountryTestAspect;
 import com.devonfw.keywi.keymanagement.service.api.rest.KeymanagementRestService;
 import com.devonfw.module.basic.common.api.reference.IdRef;
 import com.devonfw.module.criteria.common.api.query.StringSearchCriteria;

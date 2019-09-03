@@ -1,4 +1,4 @@
-package com.devonfw.keywi.keymanagement;
+package com.devonfw.keywi.keymanagement.logic.impl;
 
 import org.assertj.core.api.Assertions;
 
