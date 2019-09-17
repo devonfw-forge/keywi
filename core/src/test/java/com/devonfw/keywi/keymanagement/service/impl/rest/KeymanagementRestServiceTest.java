@@ -9,10 +9,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.devonfw.keywi.general.service.base.test.RestServiceTest;
-import com.devonfw.keywi.keymanagement.dataaccess.api.datatype.KeyItemProperty;
 import com.devonfw.keywi.keymanagement.logic.api.to.KeyItemEto;
 import com.devonfw.keywi.keymanagement.logic.api.to.KeyItemSearchCriteriaTo;
 import com.devonfw.keywi.keymanagement.logic.api.to.KeyListEto;
+import com.devonfw.keywi.keymanagement.logic.impl.KeyListCountryTestAspect;
 import com.devonfw.keywi.keymanagement.service.api.rest.KeymanagementRestService;
 import com.devonfw.module.basic.common.api.reference.IdRef;
 import com.devonfw.module.criteria.common.api.query.StringSearchCriteria;
@@ -30,23 +30,10 @@ public class KeymanagementRestServiceTest extends RestServiceTest {
   @Test
   public void testFindKeyList() {
 
-    KeymanagementRestService keymanagementService =
-        getServiceClientFactory().create(KeymanagementRestService.class, createServiceConfig());
-    KeyListEto keyList = keymanagementService.findKeyList(1L);
-    verifyCountry(keyList);
-  }
-
-  private void verifyCountry(KeyListEto keyList) {
-
-    assertThat(keyList.getId()).isEqualTo(1L);
-    assertThat(keyList.getKey()).isEqualTo("country");
-    assertThat(keyList.getName()).isEqualTo("Country");
-    assertThat(keyList.getComment()).isEqualTo("Countries of the world");
-    assertThat(keyList.getOrdering()).isEqualTo(KeyItemProperty.NAME);
-    assertThat(keyList.isValueRequired()).isTrue();
-    assertThat(keyList.getValuePattern().pattern()).isEqualTo("[A-Z]{3}");
-    assertThat(keyList.isCacheable()).isTrue();
-    assertThat(keyList.isDisabled()).isFalse();
+    KeymanagementRestService keymanagementService = getServiceClientFactory().create(KeymanagementRestService.class,
+        createServiceConfig());
+    KeyListEto keyList = keymanagementService.findKeyList(KeyListCountryTestAspect.ID_COUNTRY.getId());
+    KeyListCountryTestAspect.verifyCountry(keyList);
   }
 
   /**
@@ -55,10 +42,10 @@ public class KeymanagementRestServiceTest extends RestServiceTest {
   @Test
   public void testFindKeyListByKey() {
 
-    KeymanagementRestService keymanagementService =
-        getServiceClientFactory().create(KeymanagementRestService.class, createServiceConfig());
-    KeyListEto keyList = keymanagementService.findKeyListByKey("country");
-    verifyCountry(keyList);
+    KeymanagementRestService keymanagementService = getServiceClientFactory().create(KeymanagementRestService.class,
+        createServiceConfig());
+    KeyListEto keyList = keymanagementService.findKeyListByKey(KeyListCountryTestAspect.KEY_COUNTRY);
+    KeyListCountryTestAspect.verifyCountry(keyList);
   }
 
   /**
@@ -68,8 +55,8 @@ public class KeymanagementRestServiceTest extends RestServiceTest {
   @Test
   public void testFindKeyItemEtos() {
 
-    KeymanagementRestService keymanagementService =
-        getServiceClientFactory().create(KeymanagementRestService.class, createServiceConfig());
+    KeymanagementRestService keymanagementService = getServiceClientFactory().create(KeymanagementRestService.class,
+        createServiceConfig());
     KeyItemSearchCriteriaTo criteria = new KeyItemSearchCriteriaTo();
     criteria.setKeyListId(IdRef.of(1L));
     criteria.setName(StringSearchCriteria.eq("Germany"));

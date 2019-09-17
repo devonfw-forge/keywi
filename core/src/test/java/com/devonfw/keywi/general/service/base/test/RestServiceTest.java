@@ -2,16 +2,16 @@ package com.devonfw.keywi.general.service.base.test;
 
 import javax.inject.Inject;
 
-import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.boot.web.server.LocalServerPort;
 
 import com.devonfw.keywi.SpringBootApp;
 import com.devonfw.keywi.general.common.base.test.DbTestHelper;
 import com.devonfw.keywi.general.common.base.test.TestUtil;
-
-import com.devonfw.module.test.common.base.SubsystemTest;
 import com.devonfw.module.service.common.api.client.ServiceClientFactory;
+import com.devonfw.module.test.common.base.SubsystemDbTest;
+import com.devonfw.module.test.common.base.SubsystemTest;
 
 /**
  * Abstract base class for {@link SubsystemTest}s which runs the tests within a local server. <br/>
@@ -19,7 +19,7 @@ import com.devonfw.module.service.common.api.client.ServiceClientFactory;
  * The local server's port is randomly assigned.
  */
 @SpringBootTest(classes = { SpringBootApp.class }, webEnvironment = WebEnvironment.RANDOM_PORT)
-public abstract class RestServiceTest extends SubsystemTest {
+public abstract class RestServiceTest extends SubsystemDbTest {
 
   /**
    * The port of the web server during the test.
@@ -32,12 +32,6 @@ public abstract class RestServiceTest extends SubsystemTest {
 
   @Inject
   private DbTestHelper dbTestHelper;
-
-  @Override
-  protected void doSetUp() {
-
-    super.doSetUp();
-  }
 
   @Override
   protected void doTearDown() {
@@ -53,7 +47,6 @@ public abstract class RestServiceTest extends SubsystemTest {
 
     return this.dbTestHelper;
   }
-
 
   /**
    * @return the {@link ServiceClientFactory}
