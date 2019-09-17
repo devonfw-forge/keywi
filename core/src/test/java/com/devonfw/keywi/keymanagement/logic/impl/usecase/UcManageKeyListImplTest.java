@@ -35,7 +35,7 @@ public class UcManageKeyListImplTest extends ApplicationComponentTest {
       this.keymanagement.saveKeyList(keyList);
       failBecauseExceptionWasNotThrown(KeyModificationException.class);
     } catch (KeyModificationException e) {
-      assertThat(e.getMessage()).isEqualTo(
+      assertThat(e.getMessage()).contains(
           "You can not change the business key of entity KeyListEntity[id=1,key=country] to modifiedKey! If you really need to change the business key, create a new entity and delete the old one.");
     }
   }
